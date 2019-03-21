@@ -1,0 +1,20 @@
+﻿@model CookBook.Models.RecipesViewModel
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Dodati novi recept</h2>
+
+@using (@Html.BeginForm("Create", "Recipes"))
+{
+    <div class="container">
+        <div class="row">
+            <div class="form-group">
+                @Html.LabelFor(m=>m.Recipes.Name)
+                @Html.TextBoxFor(m => m.Recipes.Name);
+            </div>
+        </div>
+    </div>
+   
+}
