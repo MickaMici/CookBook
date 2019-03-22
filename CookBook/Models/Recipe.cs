@@ -11,6 +11,7 @@ namespace CookBook.Models
     {
         public int Id { get; set; }
 
+        [Required]
         [Display (Name= "Naziv recepta")]
         public string Name { get; set; }
 

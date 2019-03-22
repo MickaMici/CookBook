@@ -1,4 +1,4 @@
-﻿@model CookBook.Models.RecipesViewModel
+﻿@model CookBook.ViewModels.RecipesViewModel
 @{
     ViewBag.Title = "New";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,8 +11,8 @@
     <div class="container">
         <div class="row">
             <div class="form-group">
-                @Html.LabelFor(m=>m.Recipes.Name)
-                @Html.TextBoxFor(m => m.Recipes.Name);
+                @Html.LabelFor(m => m.Recipe.Name)
+                @Html.TextBoxFor(m => m.Recipe.Name)
             </div>
         </div>
     </div>

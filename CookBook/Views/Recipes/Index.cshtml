@@ -1,0 +1,38 @@
+﻿@model IEnumerable<CookBook.Models.Recipe>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Spisak recepata</h2>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>Recepti</h2>
+            @if (!Model.Any())
+            {
+                <p>Nazalost, nema jos nijednog recepta. </p>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <a href="" class="thumbnail">
+                            <p>Chrysanthemum</p>
+                            <img src="" />
+                        </a>
+                    </div>
+                }
+            }
+
+
+
+        </div>
+        
+
+    </div>
+</div>
+

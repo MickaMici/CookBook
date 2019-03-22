@@ -211,15 +211,27 @@
     <Compile Include="Migrations\201903211923173_AddedRecipes.Designer.cs">
       <DependentUpon>201903211923173_AddedRecipes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903221435581_PopulateRecipeType.cs" />
+    <Compile Include="Migrations\201903221435581_PopulateRecipeType.Designer.cs">
+      <DependentUpon>201903221435581_PopulateRecipeType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903221457234_AddAnotationToRecipeName.cs" />
+    <Compile Include="Migrations\201903221457234_AddAnotationToRecipeName.Designer.cs">
+      <DependentUpon>201903221457234_AddAnotationToRecipeName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903221612099_AddAnnotationRequiredRecipeTYpeName.cs" />
+    <Compile Include="Migrations\201903221612099_AddAnnotationRequiredRecipeTYpeName.Designer.cs">
+      <DependentUpon>201903221612099_AddAnnotationRequiredRecipeTYpeName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Recipe.cs" />
-    <Compile Include="Models\RecipesViewModel.cs" />
     <Compile Include="Models\RecipeType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\RecipesViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -322,6 +334,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Recipes\New.cshtml" />
+    <Content Include="Views\Recipes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -343,6 +356,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903211923173_AddedRecipes.resx">
       <DependentUpon>201903211923173_AddedRecipes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903221435581_PopulateRecipeType.resx">
+      <DependentUpon>201903221435581_PopulateRecipeType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903221457234_AddAnotationToRecipeName.resx">
+      <DependentUpon>201903221457234_AddAnotationToRecipeName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903221612099_AddAnnotationRequiredRecipeTYpeName.resx">
+      <DependentUpon>201903221612099_AddAnnotationRequiredRecipeTYpeName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
