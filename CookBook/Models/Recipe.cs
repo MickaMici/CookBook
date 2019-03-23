@@ -17,8 +17,10 @@ namespace CookBook.Models
 
         public RecipeType RecipeType { get; set; }
         public int RecipeTypeId { get; set; }
-        public double AverageDifficulty { get; set; }
-        public double AverageRating { get; set; }
+        
+        
+        public double? AverageDifficulty { get; set; }
+        public double? AverageRating { get; set; }
 
     }
 }

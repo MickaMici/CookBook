@@ -26,6 +26,11 @@ namespace CookBook.Controllers
             return View(recipes);
         }
 
+        public ActionResult Details(int id)
+        {
+            var recipe = _context.Recipes.SingleOrDefault(r => r.Id == id);
+            return View(recipe);
+        }
 
         public ActionResult New()
         {
