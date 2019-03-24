@@ -5422,18 +5422,19 @@ a.badge-dark:focus, a.badge-dark.focus {
 }
 
 .jumbotron {
-    padding: 5rem 5rem;
+    padding: 2rem 2rem;
     margin-bottom: 2rem;
     margin-top: 2rem;
-    background-color: #54f2e5;
+    background-color: #F3969A;
     border-radius: 10rem;
 }
 
 @media (min-width: 576px) {
   .jumbotron {
-    padding: 4rem 2rem;
+    padding: 2rem 2rem;
   }
 }
+
 
 .jumbotron-fluid {
   padding-right: 0;

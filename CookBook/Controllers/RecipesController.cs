@@ -11,6 +11,7 @@ namespace CookBook.Controllers
     public class RecipesController : Controller
     {
         private ApplicationDbContext _context;
+
         public RecipesController()
         {
             _context = new ApplicationDbContext();
@@ -22,6 +23,9 @@ namespace CookBook.Controllers
 
         public ActionResult Index()
         {
+            //ako zelimo da osim recepata klase pozivamo i neku drugu 
+            //moramo koristiit metodu include
+            //npr var recipes= _context.recipes.include(r => r.recipesType (druga tabela znaci)
             var recipes = _context.Recipes;
             return View(recipes);
         }

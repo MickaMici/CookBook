@@ -4,17 +4,24 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Dodati novi recept</h2>
 
-@using (@Html.BeginForm("Create", "Recipes"))
-{
-    <div class="container">
-        <div class="row">
-            <div class="form-group">
-                @Html.LabelFor(m => m.Recipe.Name)
-                @Html.TextBoxFor(m => m.Recipe.Name)
-            </div>
+<div class="container pt-5 pb-2 shadow">
+    <div class="row pt-2 justify-content-center">
+        <div class="col-md-8 col-sm-6 col-10 col-lg-8  pt-2 bg-light rounded">
+            @using (@Html.BeginForm("Create", "Recipes"))
+            {
+                <div class="h4 text-center bg-secondary text-light jumbotron rounded shadow-lg ">
+                    Novi recept
+                </div>
+                <br /> <br /> <br /> <br />
+                
+                                     <div class="form-group">
+
+                                         @Html.LabelFor(m => m.Recipe.Name, new { @class = "h4 text-primary " })
+                                         @Html.TextBoxFor(m => m.Recipe.Name, new { @class = "form-control" } )
+
+                                     </div>                           
+            }
         </div>
     </div>
-   
-}
+</div>
