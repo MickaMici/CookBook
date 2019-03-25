@@ -17,6 +17,8 @@ namespace CookBook.Models
         public string Name { get; set; }
 
         public RecipeType RecipeType { get; set; }
+
+        [Display(Name = "Kategorija")]
         public int RecipeTypeId { get; set; }
         
         

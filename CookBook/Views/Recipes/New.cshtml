@@ -7,20 +7,27 @@
 
 <div class="container pt-5 pb-2 shadow">
     <div class="row pt-2 justify-content-center">
-        <div class="col-md-8 col-sm-6 col-10 col-lg-8  pt-2 bg-light rounded">
+        <div class="col-md-8 col-sm-6 col-10 col-lg-8  pt-2  rounded pozadina">
             @using (@Html.BeginForm("Create", "Recipes"))
             {
                 <div class="h4 text-center bg-secondary text-light jumbotron rounded shadow-lg ">
                     Novi recept
                 </div>
-                <br /> <br /> <br /> <br />
-                
-                                     <div class="form-group">
+                <br /> <br /> <br />
 
-                                         @Html.LabelFor(m => m.Recipe.Name, new { @class = "h4 text-primary " })
-                                         @Html.TextBoxFor(m => m.Recipe.Name, new { @class = "form-control" } )
-
-                                     </div>                           
+                <div class="form-group form-group-lg">
+                    @Html.LabelFor(m => m.Recipe.Name, new { @class = "h4 text-light " })
+                    @Html.TextBoxFor(m => m.Recipe.Name, new { @class = "form-control " })
+                </div>
+                <div class="form-group form-group-lg">
+                    @Html.LabelFor(m => m.Recipe.RecipeTypeId, new { @class = "h4 text-light " })
+                    @Html.DropDownListFor(m => m.Recipe.RecipeTypeId, new SelectList(Model.RecipeTypes, "Id", "Name"), "Izaberite kategoriju", new { @class = "form-control " })
+                </div>
+                <div class="form-group shadow">
+                    <label class="h4 text-light" for="textarea1">Postupak</label>
+                    <textarea class="form-control z-depth-1" id="textarea1" rows="5" placeholder="Upisite postupak ovde..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Dodaj</button>
             }
         </div>
     </div>

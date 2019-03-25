@@ -38,6 +38,17 @@ namespace CookBook.Controllers
 
         public ActionResult New()
         {
+            var recipeTypes = _context.RecipeTypes.ToList();
+            var viewModel = new RecipesViewModel
+            {
+                RecipeTypes = recipeTypes
+            };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Create(RecipesViewModel viewModel)
+        {
             return View();
         }
 
