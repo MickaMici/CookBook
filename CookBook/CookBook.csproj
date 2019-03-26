@@ -231,9 +231,22 @@
     <Compile Include="Migrations\201903241916158_AddStringLengthToRecipeName.Designer.cs">
       <DependentUpon>201903241916158_AddStringLengthToRecipeName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903261809479_AddClassIngredientMeasure.cs" />
+    <Compile Include="Migrations\201903261809479_AddClassIngredientMeasure.Designer.cs">
+      <DependentUpon>201903261809479_AddClassIngredientMeasure.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903261810573_PopulateIngrediantMeasure.cs" />
+    <Compile Include="Migrations\201903261810573_PopulateIngrediantMeasure.Designer.cs">
+      <DependentUpon>201903261810573_PopulateIngrediantMeasure.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903261840419_FixLatinExtended.cs" />
+    <Compile Include="Migrations\201903261840419_FixLatinExtended.Designer.cs">
+      <DependentUpon>201903261840419_FixLatinExtended.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\IngredientMeasure.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Recipe.cs" />
     <Compile Include="Models\RecipeType.cs" />
@@ -382,6 +395,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903241916158_AddStringLengthToRecipeName.resx">
       <DependentUpon>201903241916158_AddStringLengthToRecipeName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903261809479_AddClassIngredientMeasure.resx">
+      <DependentUpon>201903261809479_AddClassIngredientMeasure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903261810573_PopulateIngrediantMeasure.resx">
+      <DependentUpon>201903261810573_PopulateIngrediantMeasure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903261840419_FixLatinExtended.resx">
+      <DependentUpon>201903261840419_FixLatinExtended.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

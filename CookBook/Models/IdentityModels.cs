@@ -22,6 +22,7 @@ namespace CookBook.Models
     {
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<RecipeType> RecipeTypes { get; set; }
+        public DbSet<IngredientMeasure> IngredientMeasures { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

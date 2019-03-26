@@ -39,9 +39,12 @@ namespace CookBook.Controllers
         public ActionResult New()
         {
             var recipeTypes = _context.RecipeTypes.ToList();
+            var ingredientMeasures = _context.IngredientMeasures.ToList();
             var viewModel = new RecipesViewModel
             {
-                RecipeTypes = recipeTypes
+                RecipeTypes = recipeTypes,
+                IngredientMeasures = ingredientMeasures
+                
             };
             return View(viewModel);
         }
