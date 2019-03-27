@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using CookBook.ViewModels;
 using CookBook.Models;
+using System.Text;
 
 namespace CookBook.Controllers
 {
@@ -48,6 +49,14 @@ namespace CookBook.Controllers
             };
             return View(viewModel);
         }
+
+
+        public ActionResult CreateIngredient(RecipesViewModel model)
+        {
+          
+            return PartialView(model);
+        }
+
 
         [HttpPost]
         public ActionResult Create(RecipesViewModel viewModel)

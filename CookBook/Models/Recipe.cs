@@ -20,8 +20,12 @@ namespace CookBook.Models
 
         [Display(Name = "Kategorija")]
         public int RecipeTypeId { get; set; }
-        
-        
+
+        [Required]
+        [StringLength(1000)]
+        public string Ingredients { get; set; }
+
+
         public double? AverageDifficulty { get; set; }
         public double? AverageRating { get; set; }
 

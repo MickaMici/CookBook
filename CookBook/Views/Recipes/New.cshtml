@@ -4,53 +4,31 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@using (@Html.BeginForm("Create", "Recipes"))
+{
 
 <div class="container pt-5 pb-5 shadow">
     <div class="row pt-2 justify-content-center">
         <div class="col-md-8 col-sm-6 col-10 col-lg-9  pt-2 bg-info  rounded pozadina">
-            @using (@Html.BeginForm("Create", "Recipes"))
-            {
-                <div class="h4 text-center bg-secondary text-light jumbotron rounded shadow-lg ">
-                    Novi recept
-                </div>
-                <br /> <br />
 
-                <div class="form-group form-group-lg">
-                    @Html.LabelFor(m => m.Recipe.Name, new { @class = "h4 text-light " })
-                    @Html.TextBoxFor(m => m.Recipe.Name, new { @class = "form-control " })
-                </div>
-                <div class="form-group form-group-lg">
-                    @Html.LabelFor(m => m.Recipe.RecipeTypeId, new { @class = "h4 text-light " })
-                    @Html.DropDownListFor(m => m.Recipe.RecipeTypeId, new SelectList(Model.RecipeTypes, "Id", "Name"), "Izaberite kategoriju", new { @class = "form-control " })
-                </div>
-
-
-            }
-        </div>
-    </div>
-    <div class="row justify-content-center pt-2 pb-2 ">
-        <div class="col-3 bg-info pozadina pb-2 pt-5 rounded">
-            @Html.Label("Sastojak", new { @class = "h4 text-light " })
-            @Html.TextBox("Sastojak", null, new { @class = "form-control" })
-        </div>
-
-        <div class="col-3 bg-info pozadina pb-2 pt-5 rounded">
-            @Html.Label("Kolicina", new { @class = "h4 text-light " })
-            @Html.TextBox("Kolicina", null, new { @class = "form-control", type = "number" })
-
-
-        </div>
-
-        <div class="col-3 bg-info pozadina pb-2 pt-5 rounded">
-            <div class="form-group form-group-lg">
-                @Html.Label("Mera", new { @class = "h4 text-light " })
-                @Html.DropDownListFor(m => m.IngredientMeasures, new SelectList(Model.IngredientMeasures, "Id", "Name"), "Izaberite meru", new { @class = "form-control " })
-                <br /><br />
-                <button class="btn btn-secondary btn-sm float-right">Dodaj sastojak</button>
+            <div class="h4 text-center bg-secondary text-light jumbotron rounded shadow-lg ">
+                Novi recept
             </div>
+            <br /> <br />
 
+            <div class="form-group form-group-lg">
+                @Html.LabelFor(m => m.Recipe.Name, new { @class = "h4 text-light " })
+                @Html.TextBoxFor(m => m.Recipe.Name, new { @class = "form-control " })
+            </div>
+            <div class="form-group form-group-lg">
+                @Html.LabelFor(m => m.Recipe.RecipeTypeId, new { @class = "h4 text-light " })
+                @Html.DropDownListFor(m => m.Recipe.RecipeTypeId, new SelectList(Model.RecipeTypes, "Id", "Name"), "Izaberite kategoriju", new { @class = "form-control " })
+            </div>
         </div>
     </div>
+    
+       
+    @Html.Partial("CreateIngredient")
 
     <div class="row justify-content-center pb-2 ">
         <div class="col-9 bg-info pozadina pb-2 pt-2 rounded">
@@ -60,12 +38,13 @@
             </div>
         </div>
     </div>
-    
-   
+
+
     <div class="row justify-content-center pb-2">
         <div class="col-9 bg-info pozadina pb-2 pt-2 rounded">
             <button type="submit" class="btn btn-secondary btn-block  float-right">Dodaj recept</button>
         </div>
     </div>
 </div>
-  
+}
+

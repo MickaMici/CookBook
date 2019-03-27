@@ -243,6 +243,10 @@
     <Compile Include="Migrations\201903261840419_FixLatinExtended.Designer.cs">
       <DependentUpon>201903261840419_FixLatinExtended.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903271925532_AddedIngredientsString.cs" />
+    <Compile Include="Migrations\201903271925532_AddedIngredientsString.Designer.cs">
+      <DependentUpon>201903271925532_AddedIngredientsString.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -268,6 +272,10 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="imageForBrand\136646865059f70d347c436528587872_v4 big.jpg" />
+    <Content Include="imageForBrand\download %281%29.jpg" />
+    <Content Include="imageForBrand\download.jpg" />
+    <Content Include="imageForBrand\pizza.jpg" />
     <Content Include="imageForBrand\zdrava-hrana.jpg" />
     <Content Include="RecipeFiles\5\slike\1.jpg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -359,6 +367,7 @@
     <Content Include="Views\Recipes\New.cshtml" />
     <Content Include="Views\Recipes\Index.cshtml" />
     <Content Include="Views\Recipes\Details.cshtml" />
+    <Content Include="Views\Recipes\CreateIngredient.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -404,6 +413,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903261840419_FixLatinExtended.resx">
       <DependentUpon>201903261840419_FixLatinExtended.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903271925532_AddedIngredientsString.resx">
+      <DependentUpon>201903271925532_AddedIngredientsString.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
