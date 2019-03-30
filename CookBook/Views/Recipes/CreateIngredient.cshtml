@@ -29,7 +29,7 @@
     </div>
     <div class="row justify-content-center pt-2 pb-2 ">
         <div class="col-9 bg-info pozadina pb-2 pt-5 rounded">
-            <ul id="IngredientList">
+            <ul class="list-group list-group-flush" id="IngredientList">
                
             </ul>
         </div>
@@ -42,9 +42,34 @@
             $("#btn1").click(function () {                
                 var selectedIngredient = $("#Mera").children("[value="+$("#Mera").val()+"]").text();
                 $("#HiddenTextBox").append($("#Sastojak").val() + "|" + $("#Kolicina").val() + "|" + selectedIngredient + "\n");
-                $("#IngredientList").append('<li>' + $("#Sastojak").val() + " " + $("#Kolicina").val() + selectedIngredient +  '</li>');
+                $("#IngredientList").append('<li class="list-group-item">' + $("#Sastojak").val() + " " + $("#Kolicina").val() + selectedIngredient + '<input type="button" id="removeIngredient" class="btn btn-secondary btn-sm float-right" value="Ukloni"/>' + '</li>');
+               
             });
+
+            $(document).on("click", "#removeIngredient", function () {
+                $(this).closest('li').remove();
+                
+            });
+
+            $(function () {
+                $("#btn1").click(function (event) {
+                    event.preventDefault();
+                    $("#Sastojak").val("");
+                    $("#Kolicina").val("");
+                });
+            });
+            
+            $('#MyForm').submit(function () {
+                    
+            });
+
+            
+
+
         });
+
+       
+
 
 
     </script>

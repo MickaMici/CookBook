@@ -4,47 +4,144 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (@Html.BeginForm("Create", "Recipes"))
+@using (@Html.BeginForm("Create", "Recipes", new { @id = "MyForm" }))
 {
 
-<div class="container pt-5 pb-5 shadow">
-    <div class="row pt-2 justify-content-center">
-        <div class="col-md-8 col-sm-6 col-10 col-lg-9  pt-2 bg-info  rounded pozadina">
+    <div class="container pt-5 pb-5 shadow">
+        <div class="row pt-2 justify-content-center">
+            <div class="col-md-8 col-sm-6 col-10 col-lg-9  pt-2 bg-info  rounded pozadina">
 
-            <div class="h4 text-center bg-secondary text-light jumbotron rounded shadow-lg ">
-                Novi recept
-            </div>
-            <br /> <br />
+                <div class="h4 text-center bg-secondary text-light jumbotron rounded shadow-lg ">
+                    Novi recept
+                </div>
+                <br /> <br />
 
-            <div class="form-group form-group-lg">
-                @Html.LabelFor(m => m.Recipe.Name, new { @class = "h4 text-light " })
-                @Html.TextBoxFor(m => m.Recipe.Name, new { @class = "form-control " })
+                <div class="form-group form-group-lg">
+                    @Html.LabelFor(m => m.Recipe.Name, new { @class = "h4 text-light " })
+                    @Html.TextBoxFor(m => m.Recipe.Name, new { @class = "form-control " })
+                </div>
+                <div class="form-group form-group-lg">
+                    @Html.LabelFor(m => m.Recipe.RecipeTypeId, new { @class = "h4 text-light " })
+                    @Html.DropDownListFor(m => m.Recipe.RecipeTypeId, new SelectList(Model.RecipeTypes, "Id", "Name"), "Izaberite kategoriju", new { @class = "form-control " })
+                </div>
             </div>
-            <div class="form-group form-group-lg">
-                @Html.LabelFor(m => m.Recipe.RecipeTypeId, new { @class = "h4 text-light " })
-                @Html.DropDownListFor(m => m.Recipe.RecipeTypeId, new SelectList(Model.RecipeTypes, "Id", "Name"), "Izaberite kategoriju", new { @class = "form-control " })
+        </div>
+
+
+        @Html.Partial("CreateIngredient")
+
+        <div class="row justify-content-center pb-2 ">
+            <div class="col-9 bg-info pozadina pb-2 pt-2 rounded">
+                <div class="form-group shadow">
+                    @Html.Label("Postupak", new { @class = "h4 text-light " })
+                    @Html.TextArea("Textarea", null, new { @class = "form-control z-depth-1", @rows = "5", @placeholder = "Upišite postupak ovde..." })
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center pb-2">
+            <div class="col-3 bg-info pozadina pb-5 pt-5 rounded">
+
+            </div>
+            <div class="col-3 bg-info pozadina pb-5 pt-5 rounded">
+            </div>
+            <div class="col-3 bg-info pozadina pb-5 pt-5 rounded">
+            </div>
+
+        </div>
+        <div class="row justify-content-center pb-2">
+            <div class="col-3 bg-info pozadina pb-5 pt-5 rounded">
+            </div>
+            <div class="col-3 bg-info pozadina pb-5 pt-5 rounded">
+            </div>
+            <div class="col-3 bg-info pozadina pb-5 pt-5 rounded">
+            </div>
+
+        </div>
+
+        <div class="row justify-content-center pb-2">
+            <div class="col-9 bg-info pozadina pb-2 pt-2 rounded">
+                <button type="submit" class="btn btn-secondary btn-block  float-right">Dodaj recept</button>
             </div>
         </div>
     </div>
-    
-       
-    @Html.Partial("CreateIngredient")
-
-    <div class="row justify-content-center pb-2 ">
-        <div class="col-9 bg-info pozadina pb-2 pt-2 rounded">
-            <div class="form-group shadow">
-                @Html.Label("Postupak", new { @class = "h4 text-light " })
-                @Html.TextArea("Textarea", null, new { @class = "form-control z-depth-1", @rows = "5", @placeholder = "Upišite postupak ovde..." })
-            </div>
-        </div>
-    </div>
-
-
-    <div class="row justify-content-center pb-2">
-        <div class="col-9 bg-info pozadina pb-2 pt-2 rounded">
-            <button type="submit" class="btn btn-secondary btn-block  float-right">Dodaj recept</button>
-        </div>
-    </div>
-</div>
 }
+
+
+<div class="col-md-9">
+
+    <div class="col-md-4">
+        <div class="btn btn-primary">
+            <input type="file" id="imageBrowes" />
+        </div>
+        <hr />
+
+        <div id="imgPreview" class="thumbnail" style="display:none">
+            <img class="img-responsive" id="targetImg" />
+            <div class="caption">
+                <button onclick="ClearPreview()">
+                    <span class="glyphicon" aria-hidden="true"></span>
+                </button>             
+                <span id="description"></span>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+
+        $("#imageBrowes").change(function () {
+
+            var File = this.files;
+
+            if (File && File[0]) {
+                ReadImage(File[0]);
+            }
+
+        })
+
+
+    })
+
+
+    var ReadImage = function (file) {
+
+        var reader = new FileReader;
+        var image = new Image;
+
+        reader.readAsDataURL(file);
+        reader.onload = function (_file) {
+
+            image.src = _file.target.result;
+            image.onload = function () {
+
+                var height = this.height;
+                var width = this.width;
+                var type = file.type;
+                var size = ~~(file.size / 1024) + "KB";
+
+                $("#targetImg").attr('src', _file.target.result);
+                $("#description").text("Size:" + size + ", " + height + "X " + width + ", " + type + "");
+                $("#imgPreview").show();
+
+            }
+
+        }
+
+    }
+
+    var ClearPreview = function () {
+        $("#imageBrowes").val('');
+        $("#description").text('');
+        $("#imgPreview").hide();
+
+    }
+
+</script>
+
 
