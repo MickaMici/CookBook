@@ -247,9 +247,14 @@
     <Compile Include="Migrations\201903271925532_AddedIngredientsString.Designer.cs">
       <DependentUpon>201903271925532_AddedIngredientsString.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904011440457_AddedProcedureToRecipeClass.cs" />
+    <Compile Include="Migrations\201904011440457_AddedProcedureToRecipeClass.Designer.cs">
+      <DependentUpon>201904011440457_AddedProcedureToRecipeClass.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Images.cs" />
     <Compile Include="Models\IngredientMeasure.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Recipe.cs" />
@@ -282,6 +287,14 @@
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\dropzone\basic.css" />
+    <Content Include="Scripts\dropzone\basic.min.css" />
+    <Content Include="Scripts\dropzone\dropzone-amd-module.js" />
+    <Content Include="Scripts\dropzone\dropzone-amd-module.min.js" />
+    <Content Include="Scripts\dropzone\dropzone.css" />
+    <Content Include="Scripts\dropzone\dropzone.js" />
+    <Content Include="Scripts\dropzone\dropzone.min.css" />
+    <Content Include="Scripts\dropzone\dropzone.min.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -371,6 +384,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="MyImages\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -416,6 +430,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903271925532_AddedIngredientsString.resx">
       <DependentUpon>201903271925532_AddedIngredientsString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904011440457_AddedProcedureToRecipeClass.resx">
+      <DependentUpon>201904011440457_AddedProcedureToRecipeClass.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

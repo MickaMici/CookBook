@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using CookBook.ViewModels;
 using CookBook.Models;
 using System.Text;
+using System.IO;
 
 namespace CookBook.Controllers
 {
@@ -25,7 +26,7 @@ namespace CookBook.Controllers
         public ActionResult Index()
         {
             //ako zelimo da osim recepata klase pozivamo i neku drugu 
-            //moramo koristiit metodu include
+            //moramo koristiti metodu include
             //npr var recipes= _context.recipes.include(r => r.recipesType (druga tabela znaci)
             var recipes = _context.Recipes;
             return View(recipes);
@@ -45,7 +46,7 @@ namespace CookBook.Controllers
             {
                 RecipeTypes = recipeTypes,
                 IngredientMeasures = ingredientMeasures
-                
+
             };
             return View(viewModel);
         }
@@ -53,7 +54,7 @@ namespace CookBook.Controllers
 
         public ActionResult CreateIngredient(RecipesViewModel model)
         {
-          
+
             return PartialView(model);
         }
 
@@ -65,5 +66,83 @@ namespace CookBook.Controllers
         }
 
 
+        //public JsonResult ImageUpload(ProductViewModel model)
+        //{
+
+        //    MVCTutorialEntities db = new MVCTutorialEntities();
+        //    int imageId = 0;
+
+        //    var file = model.ImageFile;
+
+        //    byte[] imagebyte = null;
+
+        //    if (file != null)
+        //    {
+
+        //        file.SaveAs(Server.MapPath("/UploadedImage/" + file.FileName));
+
+        //        BinaryReader reader = new BinaryReader(file.InputStream);
+
+        //        imagebyte = reader.ReadBytes(file.ContentLength);
+
+        //        ImageStore img = new ImageStore();
+
+        //        img.ImageName = file.FileName;
+        //        img.ImageByte = imagebyte;
+        //        img.ImagePath = "/UploadedImage/" + file.FileName;
+        //        img.IsDeleted = false;
+        //        db.ImageStores.Add(img);
+        //        db.SaveChanges();
+
+        //        imageId = img.ImageId;
+
+        //    }
+
+        //    return Json(imageId, JsonRequestBehavior.AllowGet);
+
+        //}
+
+        public ActionResult Upload()
+        {
+            bool isSavedSuccessfully = true;
+            string fName = "";
+            try
+            {
+                foreach (string fileName in Request.Files)
+                {
+                    HttpPostedFileBase file = Request.Files[fileName];
+                    fName = file.FileName;
+                    if (file != null && file.ContentLength > 0)
+                    {
+                        var path = Path.Combine(Server.MapPath("~/MyImages"));
+                        string pathString = System.IO.Path.Combine(path.ToString());
+                        var fileName1 = Path.GetFileName(file.FileName);
+                        bool isExists = System.IO.Directory.Exists(pathString);
+                        if (!isExists) System.IO.Directory.CreateDirectory(pathString);
+                        var uploadpath = string.Format("{0}\\{1}", pathString, file.FileName);
+                        file.SaveAs(uploadpath);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                isSavedSuccessfully = false;
+            }
+            if (isSavedSuccessfully)
+            {
+                return Json(new
+                {
+                    Message = fName
+                });
+            }
+            else
+            {
+                return Json(new
+                {
+                    Message = "Error in saving file"
+                });
+            }
+
+        }
     }
 }

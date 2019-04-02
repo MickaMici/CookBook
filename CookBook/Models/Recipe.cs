@@ -29,5 +29,8 @@ namespace CookBook.Models
         public double? AverageDifficulty { get; set; }
         public double? AverageRating { get; set; }
 
+        [Required]
+        [StringLength(5000)]
+        public string Procedure { get; set; }
     }
 }

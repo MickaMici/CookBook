@@ -68,80 +68,53 @@
 }
 
 
-<div class="col-md-9">
 
-    <div class="col-md-4">
-        <div class="btn btn-primary">
-            <input type="file" id="imageBrowes" />
-        </div>
-        <hr />
-
-        <div id="imgPreview" class="thumbnail" style="display:none">
-            <img class="img-responsive" id="targetImg" />
-            <div class="caption">
-                <button onclick="ClearPreview()">
-                    <span class="glyphicon" aria-hidden="true"></span>
-                </button>             
-                <span id="description"></span>
-            </div>
-        </div>
-
+@*upload slike sa dropzone*@
+@*<script src="~/Scripts/dropzone/dropzone.min.js"></script>
+    <link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
+    <div class="jumbotron">
+        <form action="~/Home/Upload" class="dropzone" id="dropzoneJsForm" style="background-color:aqua"></form>
+        <button id="submit-all">Submit all files</button>
     </div>
 
-</div>
+    <script type="text/javascript">
+        Dropzone.options.dropzoneForm =
+            {
+                init: function () {
+                    this.on("complete", function (data) {
+                        //var res = eval('(' + data.xhr.responseText + ')');
+                        var res = JSON.parse(data.xhr.responseText);
+                    });
+                }
+            };
+    </script>*@
 
+<input type="file" class="dimmy" id="image-input" multiple />
+<div class="preview-area" style="overflow-y:scroll; height:400px;"></div>
 
 <script>
+    var inputLocalFont = document.getElementById("image-input");
+    inputLocalFont.addEventListener("change", previewImages, false);
 
-    $(document).ready(function () {
+    function previewImages() {
+        var fileList = this.files;
 
-        $("#imageBrowes").change(function () {
+        var anyWindow = window.URL || window.webkitURL;
 
-            var File = this.files;
-
-            if (File && File[0]) {
-                ReadImage(File[0]);
-            }
-
-        })
-
-
-    })
-
-
-    var ReadImage = function (file) {
-
-        var reader = new FileReader;
-        var image = new Image;
-
-        reader.readAsDataURL(file);
-        reader.onload = function (_file) {
-
-            image.src = _file.target.result;
-            image.onload = function () {
-
-                var height = this.height;
-                var width = this.width;
-                var type = file.type;
-                var size = ~~(file.size / 1024) + "KB";
-
-                $("#targetImg").attr('src', _file.target.result);
-                $("#description").text("Size:" + size + ", " + height + "X " + width + ", " + type + "");
-                $("#imgPreview").show();
-
-            }
-
+        for (var i = 0; i < fileList.length; i++) {
+            var objectUrl = anyWindow.createObjectURL(fileList[i]);
+            $('.preview-area').append('<img src="' + objectUrl + '" />' + '<br/>' + '<hr>');
+            window.URL.revokeObjectURL(fileList[i]);
         }
-
-    }
-
-    var ClearPreview = function () {
-        $("#imageBrowes").val('');
-        $("#description").text('');
-        $("#imgPreview").hide();
-
     }
 
 </script>
+
+
+
+
+
+
+
 
 
