@@ -7,108 +7,116 @@
 @using (@Html.BeginForm("Create", "Recipes", new { @id = "MyForm" }))
 {
 
-    <div class="container pt-5 pb-5 shadow">
-        <div class="row pt-2 justify-content-center">
-            <div class="col-md-8 col-sm-6 col-10 col-lg-9  pt-2 bg-info  rounded pozadina">
+<div class="container pt-5 pb-5 shadow">
+    <div class="row pt-2 justify-content-center">
+        <div class="col-md-8 col-sm-6 col-10 col-lg-9  pt-2 bg-info  rounded pozadina">
 
-                <div class="h4 text-center bg-secondary text-light jumbotron rounded shadow-lg ">
-                    Novi recept
-                </div>
-                <br /> <br />
-
-                <div class="form-group form-group-lg">
-                    @Html.LabelFor(m => m.Recipe.Name, new { @class = "h4 text-light " })
-                    @Html.TextBoxFor(m => m.Recipe.Name, new { @class = "form-control " })
-                </div>
-                <div class="form-group form-group-lg">
-                    @Html.LabelFor(m => m.Recipe.RecipeTypeId, new { @class = "h4 text-light " })
-                    @Html.DropDownListFor(m => m.Recipe.RecipeTypeId, new SelectList(Model.RecipeTypes, "Id", "Name"), "Izaberite kategoriju", new { @class = "form-control " })
-                </div>
+            <div class="h4 text-center bg-secondary text-light jumbotron rounded shadow-lg ">
+                Novi recept
             </div>
-        </div>
+            <br /> <br />
 
-
-        @Html.Partial("CreateIngredient")
-
-        <div class="row justify-content-center pb-2 ">
-            <div class="col-9 bg-info pozadina pb-2 pt-2 rounded">
-                <div class="form-group shadow">
-                    @Html.Label("Postupak", new { @class = "h4 text-light " })
-                    @Html.TextArea("Textarea", null, new { @class = "form-control z-depth-1", @rows = "5", @placeholder = "Upišite postupak ovde..." })
-                </div>
+            <div class="form-group form-group-lg">
+                @Html.LabelFor(m => m.Recipe.Name, new { @class = "h4 text-light " })
+                @Html.TextBoxFor(m => m.Recipe.Name, new { @class = "form-control " })
             </div>
-        </div>
-
-        <div class="row justify-content-center pb-2">
-            <div class="col-3 bg-info pozadina pb-5 pt-5 rounded">
-
-            </div>
-            <div class="col-3 bg-info pozadina pb-5 pt-5 rounded">
-            </div>
-            <div class="col-3 bg-info pozadina pb-5 pt-5 rounded">
-            </div>
-
-        </div>
-        <div class="row justify-content-center pb-2">
-            <div class="col-3 bg-info pozadina pb-5 pt-5 rounded">
-            </div>
-            <div class="col-3 bg-info pozadina pb-5 pt-5 rounded">
-            </div>
-            <div class="col-3 bg-info pozadina pb-5 pt-5 rounded">
-            </div>
-
-        </div>
-
-        <div class="row justify-content-center pb-2">
-            <div class="col-9 bg-info pozadina pb-2 pt-2 rounded">
-                <button type="submit" class="btn btn-secondary btn-block  float-right">Dodaj recept</button>
+            <div class="form-group form-group-lg">
+                @Html.LabelFor(m => m.Recipe.RecipeTypeId, new { @class = "h4 text-light " })
+                @Html.DropDownListFor(m => m.Recipe.RecipeTypeId, new SelectList(Model.RecipeTypes, "Id", "Name"), "Izaberite kategoriju", new { @class = "form-control " })
             </div>
         </div>
     </div>
+
+
+    @Html.Partial("CreateIngredient")
+
+    <div class="row justify-content-center pb-2">
+        <div class="col-9 bg-info pozadina pb-2 pt-2 rounded shadow-lg">
+            <div class="form-group shadow-lg ">
+                @Html.Label("Postupak", new { @class = "h4 text-light " })
+                @Html.TextArea("Textarea", null, new { @class = "form-control z-depth-1", @rows = "5", @placeholder = "Upišite postupak ovde..." })
+            </div>
+        </div>
+    </div>
+    <br /><br /><br />
+    <div class="col-md-9 col-9">
+        <div class="col-md-4 col-5 bg-info pozadina">
+            
+                <input type="file" id="imageBrowes" style="display:none;" multiple />
+                <input type="button" value="Browse..." onclick="document.getElementById('imageBrowes').click();" />
+            <hr />
+
+        </div>
+    </div>
+
+    <div class="row justify-content-center pb-2">
+        <div id="images" class="col-9 bg-info pozadina pb-5 pt-5 rounded" style="overflow-y: scroll; height: 400px;">
+        </div>
+
+    </div>
+
+    <div class="row justify-content-center pb-2">
+        <div class="col-9 bg-info pozadina pb-2 pt-2 rounded">
+            <button type="submit" class="btn btn-secondary btn-block  float-right">Dodaj recept</button>
+        </div>
+    </div>
+</div>
 }
 
 
 
-@*upload slike sa dropzone*@
-@*<script src="~/Scripts/dropzone/dropzone.min.js"></script>
-    <link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
-    <div class="jumbotron">
-        <form action="~/Home/Upload" class="dropzone" id="dropzoneJsForm" style="background-color:aqua"></form>
-        <button id="submit-all">Submit all files</button>
-    </div>
 
-    <script type="text/javascript">
-        Dropzone.options.dropzoneForm =
-            {
-                init: function () {
-                    this.on("complete", function (data) {
-                        //var res = eval('(' + data.xhr.responseText + ')');
-                        var res = JSON.parse(data.xhr.responseText);
-                    });
-                }
-            };
-    </script>*@
-
-<input type="file" class="dimmy" id="image-input" multiple />
-<div class="preview-area" style="overflow-y:scroll; height:400px;"></div>
-
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script>
-    var inputLocalFont = document.getElementById("image-input");
-    inputLocalFont.addEventListener("change", previewImages, false);
 
-    function previewImages() {
-        var fileList = this.files;
+    $(document).ready(function () {
 
-        var anyWindow = window.URL || window.webkitURL;
+        $("#imageBrowes").change(function () {
+            var imgNumber = 5;
+            var images = this.files;
+            if ($("#images").children("div").length + images.length <= imgNumber) {
+                if (images) {
+                    for (var i = 0; i < images.length; i++) {
+                        if (images[i]) {
+                            ReadImage(images[i]);
+                        }
+                    }
 
-        for (var i = 0; i < fileList.length; i++) {
-            var objectUrl = anyWindow.createObjectURL(fileList[i]);
-            $('.preview-area').append('<img src="' + objectUrl + '" />' + '<br/>' + '<hr>');
-            window.URL.revokeObjectURL(fileList[i]);
+                }
+            }
+            else {
+                alert("Možete postaviti najviše " + imgNumber + " slika!");
+            }
+            $("#imageBrowes").val('');
+        })
+    })
+
+    $("#images").on("click", "div", function () {
+        this.remove();
+    })
+
+    var ReadImage = function (file) {
+
+        var reader = new FileReader;
+        var image = new Image;
+
+        reader.readAsDataURL(file);
+        reader.onload = function (_file) {
+
+            image.src = _file.target.result;
+            image.onload = function () {
+
+                $("#images").append('<div><img class="img-responsive rounded" style="cursor:no-drop" src="' + image.src + '" /></br></br></div>');               
+               
+            }
         }
+
     }
 
+
 </script>
+
+
 
 
 

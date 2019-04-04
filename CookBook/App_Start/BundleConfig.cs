@@ -24,6 +24,7 @@ namespace CookBook
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap-minty.css",
+                      "~/Content/octicons.css",
                       "~/Content/site.css"));
         }
     }
