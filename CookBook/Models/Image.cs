@@ -5,10 +5,10 @@ using System.Web;
 
 namespace CookBook.Models
 {
-    public class Images
+    public class Image
     {
         public int Id { get; set; }
         public int RecipeId { get; set; }
-        public HttpPostedFileWrapper ImageFile { get; set; }
+        public string Path { get; set; }
     }
 }

@@ -12,6 +12,7 @@ namespace CookBook.ViewModels
         public Recipe Recipe { get; set; }
         public List<RecipeType> RecipeTypes { get; set; }
         public List<IngredientMeasure> IngredientMeasures { get; set; }
+        public IEnumerable<HttpPostedFileBase> ImageFiles { get; set; }
 
     }
 }

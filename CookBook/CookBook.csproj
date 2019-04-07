@@ -251,10 +251,14 @@
     <Compile Include="Migrations\201904011440457_AddedProcedureToRecipeClass.Designer.cs">
       <DependentUpon>201904011440457_AddedProcedureToRecipeClass.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904060906403_AddedImageTable.cs" />
+    <Compile Include="Migrations\201904060906403_AddedImageTable.Designer.cs">
+      <DependentUpon>201904060906403_AddedImageTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Images.cs" />
+    <Compile Include="Models\Image.cs" />
     <Compile Include="Models\IngredientMeasure.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Recipe.cs" />
@@ -386,10 +390,11 @@
     <Content Include="Views\Recipes\Index.cshtml" />
     <Content Include="Views\Recipes\Details.cshtml" />
     <Content Include="Views\Recipes\CreateIngredient.cshtml" />
+    <Content Include="Views\Recipes\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="MyImages\" />
+    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -438,6 +443,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904011440457_AddedProcedureToRecipeClass.resx">
       <DependentUpon>201904011440457_AddedProcedureToRecipeClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904060906403_AddedImageTable.resx">
+      <DependentUpon>201904060906403_AddedImageTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

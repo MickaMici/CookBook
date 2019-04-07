@@ -20,7 +20,7 @@
                 @Html.DropDownListFor(m => m.IngredientMeasures, new SelectList(Model.IngredientMeasures, "Id", "Name"), "Izaberite meru", new { @class = "form-control", @name = "Mera", @id = "Mera" })
                 <br /><br />
                 
-                      <input type="button" id="btn1" value="Dodaj sastojak" />
+                      <input type="button" class="btn btn-secondary" style="border-radius: 50%;" id="btn1" value="Dodaj sastojak" />
             </div>
 
         </div>
@@ -41,8 +41,8 @@
         $(document).ready(function () {
             $("#btn1").click(function () {                
                 var selectedIngredient = $("#Mera").children("[value="+$("#Mera").val()+"]").text();
-                $("#HiddenTextBox").append($("#Sastojak").val() + "|" + $("#Kolicina").val() + "|" + selectedIngredient + "\n");
-                if ($("#Sastojak").val() != null && $("#Kolicina").val() != null) {
+                
+                if ($("#Sastojak").val() != "" && $("#Kolicina").val() != "" && selectedIngredient != -1) {
                     $("#IngredientList").append('<li class="list-group-item">' + $("#Sastojak").val() + " " + $("#Kolicina").val() + selectedIngredient + '<input type="button" id="removeIngredient" class="btn btn-secondary btn-sm float-right" value="Ukloni"/>' + '</li>');
 
                 }
@@ -62,17 +62,20 @@
                     $("#Kolicina").val("");
                 });
             });
-            
-            $('#MyForm').submit(function () {
-                    
-            });
 
             
-
 
         });
 
-       
+        document.getElementById("MyForm").onsubmit = function () {
+            var textString = "";
+            for (var i = 0; i < $("#IngredientList").children().length; i++) {
+                textString += $("#IngredientList").children().eq(i).text() + "\n";
+            }
+            $("#HiddenTextBox").val(textString);
+            return true;
+        };
+        
 
 
 

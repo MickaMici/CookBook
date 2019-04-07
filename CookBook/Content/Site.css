@@ -47,3 +47,31 @@ textarea {
 }
 
 
+/*myButton style*/
+
+
+.Mybutton {
+    padding: 15px 25px;
+    font-size: 24px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+    background-color: #F3969A;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+}
+
+    .Mybutton:hover {
+        background-color: #ed4e54
+    }
+
+    .Mybutton:active {
+        background-color: #e9b0b2;
+        box-shadow: 0 5px #666;
+        transform: translateY(4px);
+    }
+
+
+    

@@ -51,19 +51,74 @@ namespace CookBook.Controllers
             return View(viewModel);
         }
 
-
-        public ActionResult CreateIngredient(RecipesViewModel model)
+        public ActionResult Edit()
         {
-
-            return PartialView(model);
+            return View();
         }
-
 
         [HttpPost]
         public ActionResult Create(RecipesViewModel viewModel)
         {
+
+            var validImageTypes = new string[]
+            {
+                "image/gif",
+                "image/jpeg",
+                "image/pjpeg",
+                "image/png"
+            };
+
+            foreach (var file in viewModel.ImageFiles)
+            {
+                if (file == null || file.ContentLength == 0)
+                {
+                    ModelState.AddModelError("ImageFiles", "This field is required");
+                }
+                else if (!validImageTypes.Contains(file.ContentType))
+                {
+                    ModelState.AddModelError("ImageFiles", "Please choose either a GIF, JPG or PNG image.");
+                }
+            }
+
+
+
+            if (ModelState.IsValid)
+            {
+                _context.Recipes.Add(viewModel.Recipe);
+                _context.SaveChanges();
+
+                var newRecipeId = viewModel.Recipe.Id;
+
+
+                var uploadDir = "~/Images/" + newRecipeId.ToString();
+                var fileIndex = 0;
+                Directory.CreateDirectory(Server.MapPath(uploadDir));
+                foreach (var file in viewModel.ImageFiles)
+                {
+                    var imagePath = Path.Combine(Server.MapPath(uploadDir), fileIndex.ToString());
+                    var imageUrl = Path.Combine(uploadDir, fileIndex.ToString());
+                    file.SaveAs(imagePath);
+                    var image = new Image
+                    {
+                        RecipeId = newRecipeId,
+                        Path=imageUrl
+                    };
+
+                    _context.Images.Add(image);
+                    _context.SaveChanges();                
+
+                    fileIndex++;
+                }
+
+                return RedirectToAction("Details", "Recipes", new { id = newRecipeId });
+            }
+
             return View();
+            
+
         }
+
+        
 
 
        
