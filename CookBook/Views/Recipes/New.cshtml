@@ -19,10 +19,13 @@
             <div class="form-group form-group-lg">
                 @Html.LabelFor(m => m.Recipe.Name, new { @class = "h4 text-light " })
                 @Html.TextBoxFor(m => m.Recipe.Name, new { @class = "form-control " })
+                @Html.ValidationMessageFor(m => m.Recipe.Name)
             </div>
             <div class="form-group form-group-lg">
                 @Html.LabelFor(m => m.Recipe.RecipeTypeId, new { @class = "h4 text-light " })
                 @Html.DropDownListFor(m => m.Recipe.RecipeTypeId, new SelectList(Model.RecipeTypes, "Id", "Name"), "Izaberite kategoriju", new { @class = "form-control " })
+                @Html.ValidationMessageFor(m => m.Recipe.RecipeTypeId)
+
             </div>
         </div>
     </div>
@@ -33,6 +36,8 @@
         <div class="col-3 bg-info pozadina pb-2 pt-5 rounded">
             @Html.Label("Sastojak", new { @class = "h4 text-light " })
             @Html.TextBox("Sastojak", null, new { @class = "form-control", @id = "Sastojak" })
+            @Html.ValidationMessageFor(m => m.Recipe.Ingredients)
+
         </div>
 
         <div class="col-3 bg-info pozadina pb-2 pt-5 rounded">
@@ -48,7 +53,7 @@
                 @Html.DropDownList("Mera", new SelectList(Model.IngredientMeasures, "Id", "Name"), "Izaberite meru", new { @class = "form-control", @name = "Mera", @id = "Mera" })
                 <br /><br />
 
-                <input type="button" class="btn btn-secondary" style="border-radius: 50%;" id="AddIngredientBtn" value="Dodaj sastojak" />
+                <input type="button" class="btn btn-secondary" style="border-radius: 30px;" id="AddIngredientBtn" value="Dodaj sastojak" />
             </div>
 
         </div>
@@ -66,20 +71,30 @@
             <div class="form-group shadow-lg ">
                 @Html.Label("Postupak", new { @class = "h4 text-light " })
                 @Html.TextAreaFor(m => m.Recipe.Procedure, new { @class = "form-control z-depth-1", @rows = "5", @placeholder = "Upišite postupak ovde..." })
+                @Html.ValidationMessageFor(m => m.Recipe.Procedure)
+
             </div>
         </div>
-    </div>   
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-9">
+            <span class="octicon octicon-alert"></span>
+            <div>Molimo vas da popunite sva polja. Dodavanje slika nije obavezno.</div>
+            <div>Možete maksimalno dodati 5 slika!</div>
+
+        </div>
+    </div>
 
     <div class="row justify-content-center pb-2">
         <div id="Images" class="col-9 bg-info pozadina pb-5 pt-5 rounded" style="overflow-y: scroll; height: 400px;">
             @for (int i = 0; i < 5; i++)
             {
-            <div style="border-color:black">
-                <input type="file" id="ImageFiles_@i" name="ImageFiles[@i]" style="display:none;" />
-                <input type="button" class="btn btn-lg btn-secondary btn-block pt-3" value="Dodaj sliku..." onclick="document.getElementById('ImageFiles_@i').click();" />
-                <img class="img-responsive rounded" src="" style="display:none;" />
-                <input type="button" class="btn btn-secondary btn-sm" id="RemoveImage" value="x" style="display:none;"/>
-            </div>
+                <div>
+                    <input type="file" id="ImageFiles_@i" name="ImageFiles[@i]" style="display:none;" />
+                    <input type="button" class="btn btn Mydefault btn-block  pt-3" value="Dodaj sliku..." onclick="document.getElementById('ImageFiles_@i').click();" />
+                    <img class="img-responsive rounded" src="" style="display:none;" />
+                    <input type="button" class="btn btn-secondary btn-sm" id="RemoveImage" value="x" style="display:none;" />
+                </div>
             }
         </div>
     </div>
@@ -166,7 +181,7 @@
     document.getElementById("MyForm").onsubmit = function () {
         var textString = "";
         for (var i = 0; i < $("#IngredientList").children().length; i++) {
-            textString += $("#IngredientList").children().eq(i).text() + "\n";
+            textString += $("#IngredientList").children().eq(i).text() + "|";
         }
         $("#HiddenTextBox").val(textString);
 

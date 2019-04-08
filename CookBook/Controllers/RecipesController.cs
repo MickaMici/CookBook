@@ -7,6 +7,7 @@ using CookBook.ViewModels;
 using CookBook.Models;
 using System.Text;
 using System.IO;
+using System.Data.Entity;
 
 namespace CookBook.Controllers
 {
@@ -32,11 +33,36 @@ namespace CookBook.Controllers
             return View(recipes);
         }
 
+
+        [HttpGet]
         public ActionResult Details(int id)
         {
-            var recipe = _context.Recipes.SingleOrDefault(r => r.Id == id);
-            return View(recipe);
+           
+            
+            var recipeTypes = _context.RecipeTypes.ToList();
+            var ingredientMeasures = _context.IngredientMeasures.ToList();
+
+            var viewModel = new RecipesViewModel
+            {
+                Recipe = _context.Recipes.Include(r => r.RecipeType).SingleOrDefault(r => r.Id == id),
+                RecipeTypes = recipeTypes,
+                IngredientMeasures = ingredientMeasures
+
+                
+            };
+
+
+            var ingredients = viewModel.Recipe.Ingredients;
+            viewModel.SplitedIngredients = ingredients.Split('|').ToList();
+
+            var imagesPaths = (from Image in _context.Images
+                               where Image.RecipeId == id
+                               select Image.Path).ToList();
+            viewModel.ImagesPaths = imagesPaths;
+            return View(viewModel);
         }
+
+
 
         public ActionResult New()
         {
@@ -95,9 +121,10 @@ namespace CookBook.Controllers
                 Directory.CreateDirectory(Server.MapPath(uploadDir));
                 foreach (var file in viewModel.ImageFiles)
                 {
-                    var imagePath = Path.Combine(Server.MapPath(uploadDir), fileIndex.ToString());
-                    var imageUrl = Path.Combine(uploadDir, fileIndex.ToString());
+                    var imagePath = Path.Combine(Server.MapPath(uploadDir), fileIndex.ToString() + Path.GetExtension(file.FileName));
+                    var imageUrl = Path.Combine(uploadDir, fileIndex.ToString() + Path.GetExtension(file.FileName));
                     file.SaveAs(imagePath);
+                    
                     var image = new Image
                     {
                         RecipeId = newRecipeId,
@@ -112,8 +139,21 @@ namespace CookBook.Controllers
 
                 return RedirectToAction("Details", "Recipes", new { id = newRecipeId });
             }
+            else
+            {
+                var recipeTypes = _context.RecipeTypes.ToList();
+                var ingredientMeasures = _context.IngredientMeasures.ToList();
+                var viewModel1 = new RecipesViewModel
+                {
+                    RecipeTypes = recipeTypes,
+                    IngredientMeasures = ingredientMeasures
 
-            return View();
+                };
+                return View("New",viewModel1);
+
+            }
+
+            
             
 
         }

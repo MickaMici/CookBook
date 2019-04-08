@@ -1,10 +1,65 @@
-﻿@model CookBook.Models.Recipe
+﻿@model CookBook.ViewModels.RecipesViewModel
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@Model.Name</h2>
+
+<body class="myBody">
+    <br /><br />
+    @*@{
+        var s = Model.SplitedIngredients;
+        string[] arrayOfIngredients = s.Split('|');
+    }*@
+
+    <div class="container pt-5 pb-2 shadow-lg">
+        <div class="row">
+            <div class="col-9 justify-content-center">
+                <h1 class="text-center">@Model.Recipe.Name</h1>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-9 justify-content-center">
+                <h3>Tip recepta :</h3>
+                <p style="font-size: 20px;">@Model.Recipe.RecipeType.Name</p>
+                           
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-9">
+                <ul>
+                    @for (int i = 0; i < Model.SplitedIngredients.Count() - 1; i++)
+                    {
+                        <li style="font-size: 20px;">@Model.SplitedIngredients[i]</li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-9">
+                <div class="rounded shadow" style="background-color:#c9f4f3; font-size: 20px;">
+                    <h3>Postupak</h3>
+                    @Model.Recipe.Procedure
+
+                </div>
+            </div>
+        </div>
+        <div>
+            @foreach (var item in Model.ImagesPaths)
+            {
+            <div>
+                <img src="@Url.Content(item)" />
+
+            </div>
+            }
+        </div>
+
+
+    </div>
+
+</body>
+
 
 
 
