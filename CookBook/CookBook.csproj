@@ -255,6 +255,10 @@
     <Compile Include="Migrations\201904060906403_AddedImageTable.Designer.cs">
       <DependentUpon>201904060906403_AddedImageTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904091240042_AlterTableMeasures.cs" />
+    <Compile Include="Migrations\201904091240042_AlterTableMeasures.Designer.cs">
+      <DependentUpon>201904091240042_AlterTableMeasures.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -447,6 +451,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904060906403_AddedImageTable.resx">
       <DependentUpon>201904060906403_AddedImageTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904091240042_AlterTableMeasures.resx">
+      <DependentUpon>201904091240042_AlterTableMeasures.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

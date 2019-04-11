@@ -119,7 +119,7 @@
             var selectedIngredient = $("#Mera").children("[value=" + $("#Mera").val() + "]").text();
 
             if ($("#Sastojak").val() != "" && $("#Kolicina").val() != "" && selectedIngredient != -1) {
-                $("#IngredientList").append('<li class="list-group-item">' + $("#Sastojak").val() + " " + $("#Kolicina").val() + selectedIngredient + '<input type="button" id="removeIngredient" class="btn btn-secondary btn-sm float-right" value="Ukloni"/>' + '</li>');
+                $("#IngredientList").append('<li class="list-group-item">' + $("#Sastojak").val() + " " + $("#Kolicina").val() + " " + selectedIngredient + '<input type="button" id="removeIngredient" class="btn btn-secondary btn-sm float-right" value="Ukloni"/>' + '</li>');
 
             }
             $("#Sastojak").val("");
