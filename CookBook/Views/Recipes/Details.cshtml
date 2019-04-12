@@ -7,62 +7,88 @@
 
 <body class="myBody">
     <br /><br />
-    @*@{
-        var s = Model.SplitedIngredients;
-        string[] arrayOfIngredients = s.Split('|');
-    }*@
-
-    <div class="container pt-5 pb-2 shadow-lg">
-        <div class="row">
-            <div class="col-9 justify-content-center">
-                <h1 class="text-center">@Model.Recipe.Name</h1>
-
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-9 justify-content-center">
-                <h3>Tip recepta :</h3>
-                <p style="font-size: 20px;">@Model.Recipe.RecipeType.Name</p>
-                           
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-9">
-                <ul>
-                    @for (int i = 0; i < Model.SplitedIngredients.Count() - 1; i++)
-                    {
-                        <li style="font-size: 20px;">@Model.SplitedIngredients[i]</li>
-                    }
-                </ul>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-9">
-                <div class="rounded shadow" style="background-color:#c9f4f3; font-size: 20px;">
-                    <h3>Postupak</h3>
-                    @Model.Recipe.Procedure
-
-                </div>
-            </div>
-        </div>
-        <div class="container">
-           
-                @foreach (var item in Model.ImagesPaths)
-                {
-                    <div class="row">
-                        <div class="col-md-4 col-sm-6">
-                            <img src="@Url.Content(item)" style="width:800px; height:500px;" />
-
-                        </div>
-                    </div>
-                    
-                }
-            
-        </div>
  
+          <div class="container pt-5 pb-2 shadow-lg">
+
+              <div class="row">
+                  <div class="col-12 justify-content-center">
+                      <h1 class="text-center">@Model.Recipe.Name</h1>
+                  </div>
+              </div>
+              <br /><br /><br />
+              <div class="row">
+                  <div class="col-12 justify-content-center ">
+                      <h4 >Dodao: </h4>
+                      <p style="font-size: 25px;">@Model.Recipe.User.UserName</p>
+                  </div>
+              </div>
+              <br />   <br />   <br />
+              <div class="row">
+                  <div class="col-12 justify-content-center">
+                      <h4>Datum dodavanja : </h4>
+                      <p>@Model.Recipe.Date</p>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-12 justify-content-center">
+                      <h3>Tip recepta :</h3>
+                      <p style="font-size: 25px;">@Model.Recipe.RecipeType.Name</p>
+                      <br />
+                  </div>
+              </div>
+              <br />
+              <div class="row">
+                  <div class="col-9">
+                      <h3>Sastojci</h3>
+                      <ul>
+                          @for (int i = 0; i < Model.SplitedIngredients.Count() - 1; i++)
+                          {
+                              <li style="font-size: 20px;">@Model.SplitedIngredients[i]</li>
+                          }
+                      </ul>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-12">
+                      <div class="rounded shadow" style="background-color:#c9f4f3; font-size: 20px;">
+                          <h3>Postupak</h3>
+                          @Model.Recipe.Procedure
+
+                      </div>
+                  </div>
+              </div>
+              <br /><br />
+              <div class="Myrow">
+                  @foreach (var item in Model.ImagesPaths)
+                  {
+                      <div class="Mycolumn">
+                          <img src="@Url.Content(item)" style="width:100%" onclick="myFunction(this); " class="Mythumbnail" />
+                      </div>
+
+                  }
+              </div>
 
 
+
+
+
+
+          </div>
+    <br /><br />
+    <div class="Mycontainer shadow-lg" >
+        <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
+        <img id="expandedImg" style="width:100%; border-radius:30px;">
+        <div id="imgtext"></div>
     </div>
+    <script>
+        function myFunction(imgs) {
+            var expandImg = document.getElementById("expandedImg");
+            var imgText = document.getElementById("imgtext");
+            expandImg.src = imgs.src;
+            imgText.innerHTML = imgs.alt;
+            expandImg.parentElement.style.display = "block";
+        }
+    </script>
 
 </body>
 

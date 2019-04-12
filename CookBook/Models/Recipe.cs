@@ -33,5 +33,11 @@ namespace CookBook.Models
         [Required(ErrorMessage ="Morate upisati postupak")]
         [StringLength(5000)]
         public string Procedure { get; set; }
+
+        public ApplicationUser User { get; set; }
+
+        
+        public DateTime Date { get; set; }
+
     }
 }

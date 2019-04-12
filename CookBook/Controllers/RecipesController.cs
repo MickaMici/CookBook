@@ -8,16 +8,21 @@ using CookBook.Models;
 using System.Text;
 using System.IO;
 using System.Data.Entity;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace CookBook.Controllers
 {
     public class RecipesController : Controller
     {
         private ApplicationDbContext _context;
+        protected UserManager<ApplicationUser> UserManager { get; set; }
 
         public RecipesController()
         {
             _context = new ApplicationDbContext();
+            this.UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(this._context));
+
         }
         protected override void Dispose(bool disposing)
         {
@@ -44,14 +49,15 @@ namespace CookBook.Controllers
 
             var viewModel = new RecipesViewModel
             {
-                Recipe = _context.Recipes.Include(r => r.RecipeType).SingleOrDefault(r => r.Id == id),
+                Recipe = _context.Recipes.Include(r => r.RecipeType).Include(r=>r.User).SingleOrDefault(r => r.Id == id),
                 RecipeTypes = recipeTypes,
                 IngredientMeasures = ingredientMeasures
 
                 
             };
 
-
+           
+            
             var ingredients = viewModel.Recipe.Ingredients;
             viewModel.SplitedIngredients = ingredients.Split('|').ToList();
 
@@ -63,7 +69,7 @@ namespace CookBook.Controllers
         }
 
 
-
+        [Authorize]
         public ActionResult New()
         {
             var recipeTypes = _context.RecipeTypes.ToList();
@@ -110,6 +116,10 @@ namespace CookBook.Controllers
 
             if (ModelState.IsValid)
             {
+
+                var user = UserManager.FindById(User.Identity.GetUserId());
+                viewModel.Recipe.User = user;
+                viewModel.Recipe.Date = DateTime.Now;
                 _context.Recipes.Add(viewModel.Recipe);
                 _context.SaveChanges();
 

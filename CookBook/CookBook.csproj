@@ -259,6 +259,26 @@
     <Compile Include="Migrations\201904091240042_AlterTableMeasures.Designer.cs">
       <DependentUpon>201904091240042_AlterTableMeasures.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904111202270_SeedUsers.cs" />
+    <Compile Include="Migrations\201904111202270_SeedUsers.Designer.cs">
+      <DependentUpon>201904111202270_SeedUsers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904121348260_AddedUserIdPropToRecipe.cs" />
+    <Compile Include="Migrations\201904121348260_AddedUserIdPropToRecipe.Designer.cs">
+      <DependentUpon>201904121348260_AddedUserIdPropToRecipe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904121426579_AddedFirstNameToApplicationUser.cs" />
+    <Compile Include="Migrations\201904121426579_AddedFirstNameToApplicationUser.Designer.cs">
+      <DependentUpon>201904121426579_AddedFirstNameToApplicationUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904121445074_AddedLastNameToApplicationUser.cs" />
+    <Compile Include="Migrations\201904121445074_AddedLastNameToApplicationUser.Designer.cs">
+      <DependentUpon>201904121445074_AddedLastNameToApplicationUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904121851185_AddedDateToRecipes.cs" />
+    <Compile Include="Migrations\201904121851185_AddedDateToRecipes.Designer.cs">
+      <DependentUpon>201904121851185_AddedDateToRecipes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -454,6 +474,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904091240042_AlterTableMeasures.resx">
       <DependentUpon>201904091240042_AlterTableMeasures.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904111202270_SeedUsers.resx">
+      <DependentUpon>201904111202270_SeedUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904121348260_AddedUserIdPropToRecipe.resx">
+      <DependentUpon>201904121348260_AddedUserIdPropToRecipe.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904121426579_AddedFirstNameToApplicationUser.resx">
+      <DependentUpon>201904121426579_AddedFirstNameToApplicationUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904121445074_AddedLastNameToApplicationUser.resx">
+      <DependentUpon>201904121445074_AddedLastNameToApplicationUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904121851185_AddedDateToRecipes.resx">
+      <DependentUpon>201904121851185_AddedDateToRecipes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
