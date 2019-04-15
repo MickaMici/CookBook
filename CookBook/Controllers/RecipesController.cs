@@ -161,11 +161,28 @@ namespace CookBook.Controllers
                 };
                 return View("New",viewModel1);
 
-            }
+            }           
 
-            
-            
+        }
 
+        public ActionResult GetRecipesByType(int id)
+        {
+            var recipes = (from Recipe in _context.Recipes
+                               where Recipe.RecipeTypeId == id
+                               select Recipe).ToList();
+            
+            var viewModel = new GetRecipesByTypeViewModel
+            {
+                Recipes = recipes
+            };
+            return View(viewModel);
+        }
+
+        [ChildActionOnly]
+        public ActionResult RecipeTypes()
+        {
+            var model = _context.RecipeTypes.ToList();
+            return PartialView("_RecipeTypesPartial", model);
         }
 
         

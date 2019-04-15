@@ -24,65 +24,22 @@
 
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">@Html.ActionLink("Početna", "Index", "Home", routeValues: null, htmlAttributes: new { id = "HomeLink", @class = "nav-link" })</li>
-                @*<li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>*@
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-
-                </li>
+                <li class="nav-item active">@Html.ActionLink("Početna", "Index", "Home", routeValues: null, htmlAttributes: new { id = "HomeLink", @class = "nav-link myClassForActionLink", @style = "color:white" })</li>
+                @Html.Action("RecipeTypes", "Recipes")                
             </ul>
-
             @*<form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="text" placeholder="Search">
                 <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
             </form>*@
             @Html.Partial("_LoginPartial")
-
         </div>
-
     </nav>
 
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year</p>
+            <p>&copy; @DateTime.Now.Year Milica Zdravkovic</p>
         </footer>
     </div>
 

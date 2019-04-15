@@ -61,9 +61,8 @@
               <div class="Myrow">
                   @foreach (var item in Model.ImagesPaths)
                   {
-                      <div class="Mycolumn">
-                          <img src="@Url.Content(item)" style="width:100%" onclick="myFunction(this); " class="Mythumbnail" />
-                      </div>
+                  <div class="Mycolumn">
+                      <img src="@Url.Content(item)" style="width:100%" onclick="myFunction(this); " class="Mythumbnail" data-toggle="tooltip" data-placement="top" title="Kliknite na sliku za veci prikaz" />   </div>
 
                   }
               </div>
