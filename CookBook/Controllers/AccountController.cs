@@ -9,20 +9,29 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using CookBook.Models;
+using CookBook.ViewModels;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
 
 namespace CookBook.Controllers
 {
+   
+
+
     [Authorize]
     public class AccountController : Controller
     {
+        private ApplicationDbContext _context;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
         public AccountController()
         {
+            _context = new ApplicationDbContext();
         }
 
+
+      
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
             UserManager = userManager;
@@ -62,6 +71,7 @@ namespace CookBook.Controllers
             return View();
         }
 
+     
         //
         // POST: /Account/Login
         [HttpPost]
@@ -98,6 +108,31 @@ namespace CookBook.Controllers
                     ModelState.AddModelError("", "Pogrešan mejl ili šifra.");
                     return View(model);
             }
+        }
+
+        //Akcija za prikazivanje profila
+        [Authorize]
+        public ActionResult UserProfile()
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            var recipes = (from Recipe in _context.Recipes
+                           where Recipe.User.Id == user.Id
+                           select Recipe).ToList();
+
+            //pravim novu listu u koju za svaki item u listi recepata dodajem prvu sliku iz Image tabele koja odgovara id-u konkretnog recepta
+            List<string> imagePaths = new List<string>();
+            foreach (var item in recipes)
+            {
+                imagePaths.Add((from Image in _context.Images where Image.RecipeId == item.Id select Image.Path).First());
+            }
+
+            var model = new ProfileViewModel()
+            {
+                User = user,
+                Recipes = recipes,
+                ImagesPaths=imagePaths
+            };
+            return View("Profile", model);
         }
 
         //
@@ -424,6 +459,11 @@ namespace CookBook.Controllers
         {
             if (disposing)
             {
+                if(_context != null)
+                {
+                    _context.Dispose();
+                    _context = null;
+                }
                 if (_userManager != null)
                 {
                     _userManager.Dispose();
@@ -436,7 +476,7 @@ namespace CookBook.Controllers
                     _signInManager = null;
                 }
             }
-
+            
             base.Dispose(disposing);
         }
 

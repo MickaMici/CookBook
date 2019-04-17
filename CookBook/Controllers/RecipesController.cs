@@ -165,6 +165,8 @@ namespace CookBook.Controllers
 
         }
 
+        //akcija koja se poziva u parcijalnom view-u (_RecipeTypesPartial)
+        // iz baze pokupi sve recepte koji imaju konkretan id tj. tip recepta
         public ActionResult GetRecipesByType(int id)
         {
             var recipes = (from Recipe in _context.Recipes
@@ -178,7 +180,8 @@ namespace CookBook.Controllers
             return View(viewModel);
         }
 
-        [ChildActionOnly]
+        //akcija koja pravi parcijalni view
+        //[ChildActionOnly]
         public ActionResult RecipeTypes()
         {
             var model = _context.RecipeTypes.ToList();

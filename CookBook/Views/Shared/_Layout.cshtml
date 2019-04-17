@@ -25,12 +25,13 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">@Html.ActionLink("Početna", "Index", "Home", routeValues: null, htmlAttributes: new { id = "HomeLink", @class = "nav-link myClassForActionLink", @style = "color:white" })</li>
-                @Html.Action("RecipeTypes", "Recipes")                
+                @Html.Action("RecipeTypes", "Recipes")
             </ul>
             @*<form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="text" placeholder="Search">
                 <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
             </form>*@
+            
             @Html.Partial("_LoginPartial")
         </div>
     </nav>

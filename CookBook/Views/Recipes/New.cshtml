@@ -143,8 +143,7 @@
 
     });
 
-    $("#RemoveImage").click(function () {
-
+    $(document).on("click", "#RemoveImage", function () {
         $(this).siblings("img").attr("src", "");
         $(this).siblings("img").hide();
         $(this).siblings('input[type="file"]').val('');
