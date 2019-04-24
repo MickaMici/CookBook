@@ -10,13 +10,17 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-    
+    <style>
+        body {
+            padding-top: 2px;
+        }
+    </style>
 </head>
-<body>    
+
+<body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <a class="navbar-brand" href="">
             <img src="~/imageForBrand/zdrava-hrana.jpg" width="40" height="40" alt="">
-          
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -27,11 +31,8 @@
                 <li class="nav-item active">@Html.ActionLink("Početna", "Index", "Home", routeValues: null, htmlAttributes: new { id = "HomeLink", @class = "nav-link myClassForActionLink", @style = "color:white" })</li>
                 @Html.Action("RecipeTypes", "Recipes")
             </ul>
-            @*<form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search">
-                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-            </form>*@
-            
+
+
             @Html.Partial("_LoginPartial")
         </div>
     </nav>
@@ -44,6 +45,6 @@
         </footer>
     </div>
 
-    
 </body>
+
 </html>

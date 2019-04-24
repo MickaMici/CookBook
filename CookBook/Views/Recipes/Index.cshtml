@@ -1,36 +1,59 @@
-﻿@model IEnumerable<CookBook.Models.Recipe>
+﻿@model CookBook.ViewModels.ProfileViewModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Spisak recepata</h2>
+
 
 
 <div class="container shadow-lg">
-    
-        <h2>Recepti</h2>
-        @if (!Model.Any())
-        {
-            <p>Nazalost, nema jos nijednog recepta. </p>
-        }
-        else
-        {
-            <div class="row">
-                @foreach (var item in Model)
-                {
+
+    <h2>Recepti</h2>
+    @if (!Model.Recipes.Any())
+    {
+        <p>Nazalost, nema jos nijednog recepta. </p>
+    }
+    else
+    {
+        <div class="row" id="rowDiv">
+            @foreach (var item in Model.Recipes)
+            {
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-
-                    @Html.ActionLink(item.Name, "Details", "Recipes", new { id = item.Id }, new { @class = "thumbnail" })
-                    <img src="~/RecipeFiles/@item.Id/slike/1.jpg" />
+                    <div>
+                        @Html.ActionLink(item.Name, "Details", "Recipes", routeValues: new { @id = item.Id }, htmlAttributes: new { @style = "font-size:30px" })
+                    </div>
+                    <div>
+                        <img class="rounded shadow-lg img-thumbnail" src="@Url.Content(Model.ImagesPaths[Model.Recipes.IndexOf(item)])" style="width:100%" />
+                    </div>
+                    <button data-recipe-id="@item.Id" class="btn btn-secondary btn-link text-light js-delete">Obrišite recept</button><br />
+                    @Html.ActionLink("Izmenite recept", "Edit", "Recipes", routeValues: new { @id = item.Id }, htmlAttributes: new { @class = "btn btn-secondary" })
+                    <br /><br />
                 </div>
-                }
-            </div>
 
-        }
-            
+            }
+        </div>
 
+    }
+
+    <script>
+        $("#rowDiv .js-delete").on("click", function () {
+            var button = $(this);
+            if (confirm("Da li ste sigurni da zelite da izbrišete ovaj recept? ")) {
+                $.ajax({
+                    url: "/Recipes/Delete/",
+                    data: { id: $(this).attr("data-recipe-id") },
+                    success: function () {
+                        button.parent().remove();
+                        //button.closest('[class="itemDiv"]').remove();
+                        //$(this).parent().parent().remove();
+                    }
+
+                });
+            }
+        })
+    </script>
 
 
 </div>

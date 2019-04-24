@@ -4,119 +4,127 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
- @using (Html.BeginForm("Create", "Recipes", FormMethod.Post, new { id = "MyForm" , role="form", enctype = "multipart/form-data" }))
- {
+@*enctype = "multipart/form-data" sluzi da se omoguci slanje fajlova preko post-a forme. U protivnom se podaci iz forme tretiraju kao cist tekst*@
+@using (Html.BeginForm("Create", "Recipes", FormMethod.Post, new { id = "MyForm", role = "form", enctype = "multipart/form-data" }))
+{
 
-<div class="container pt-5 pb-5 shadow">
-    <div class="row pt-2 justify-content-center">
-        <div class="col-md-8 col-sm-6 col-10 col-lg-9  pt-2 bg-info  rounded pozadina">
-            <div class="h4 text-center bg-secondary text-light jumbotron rounded shadow-lg ">
-                Novi recept
-            </div>
-            <br /> <br />
-            <div class="form-group form-group-lg">
-                @Html.LabelFor(m => m.Recipe.Name, new { @class = "h4 text-light " })
-                @Html.TextBoxFor(m => m.Recipe.Name, new { @class = "form-control " })
-                @Html.ValidationMessageFor(m => m.Recipe.Name)
-            </div>
-            <div class="form-group form-group-lg">
-                @Html.LabelFor(m => m.Recipe.RecipeTypeId, new { @class = "h4 text-light " })
-                @Html.DropDownListFor(m => m.Recipe.RecipeTypeId, new SelectList(Model.RecipeTypes, "Id", "Name"), "Izaberite kategoriju", new { @class = "form-control " })
-                @Html.ValidationMessageFor(m => m.Recipe.RecipeTypeId)
-
+    <div class="container pt-5 pb-5 shadow">
+        <div class="row pt-2 justify-content-center">
+            <div class="col-md-8 col-sm-6 col-10 col-lg-9  pt-2 bg-info  rounded pozadina">
+                <div class="h4 text-center bg-secondary text-light jumbotron rounded shadow-lg ">
+                    Novi recept
+                </div>
+                <br /> <br />
+                <div class="form-group form-group-lg">
+                    @Html.LabelFor(m => m.Recipe.Name, new { @class = "h4 text-light " })
+                    @Html.TextBoxFor(m => m.Recipe.Name, new { @class = "form-control " })
+                    @Html.ValidationMessageFor(m => m.Recipe.Name)
+                </div>
+                <div class="form-group form-group-lg">
+                    @Html.LabelFor(m => m.Recipe.RecipeTypeId, new { @class = "h4 text-light " })
+                    @Html.DropDownListFor(m => m.Recipe.RecipeTypeId, new SelectList(Model.RecipeTypes, "Id", "Name"), "Izaberite kategoriju", new { @class = "form-control " })
+                    @Html.ValidationMessageFor(m => m.Recipe.RecipeTypeId)
+                </div>
             </div>
         </div>
-    </div>
 
 
-    <div class="row justify-content-center pt-2 pb-2 ">
-        @Html.HiddenFor(m => m.Recipe.Ingredients, new { @id = "HiddenTextBox" })
-        <div class="col-3 bg-info pozadina pb-2 pt-5 rounded">
-            @Html.Label("Sastojak", new { @class = "h4 text-light " })
-            @Html.TextBox("Sastojak", null, new { @class = "form-control", @id = "Sastojak" })
-            @Html.ValidationMessageFor(m => m.Recipe.Ingredients)
+        <div class="row justify-content-center pt-2 pb-2 ">
+
+
+            <div class="col-4 bg-info pozadina pb-2 pt-5 rounded">
+                @Html.Label("Količina", new { @class = "h4 text-light " })
+                @Html.TextBox("Kolicina", null, new { @class = "form-control", @id = "Kolicina" })
+            </div>
+            <div class="col-5 bg-info pozadina pb-2 pt-5 rounded">
+                @Html.Label("Sastojak", new { @class = "h4 text-light " })
+                @Html.TextBox("Sastojak", null, new { @class = "form-control", @id = "Sastojak" })
+                @Html.ValidationMessageFor(m => m.Recipe.Ingredients)
+                <br />
+                <input type="button" class="btn btn-secondary float-right" style="border-radius: 30px;" id="AddIngredientBtn" value="Dodaj sastojak" />
+            </div>
+
         </div>
-
-        <div class="col-3 bg-info pozadina pb-2 pt-5 rounded">
-            @Html.Label("Količina", new { @class = "h4 text-light " })
-            @Html.TextBox("Kolicina", null, new { @class = "form-control", @id = "Kolicina" })
-
-
-        </div>
-
-        <div class="col-3 bg-info pozadina pb-2 pt-5 rounded">
-            <div class="form-group form-group-lg">
-                @Html.Label("Mera", new { @class = "h4 text-light " })
-                @Html.DropDownList("Mera", new SelectList(Model.IngredientMeasures, "Id", "Name"), "Izaberite meru", new { @class = "form-control", @name = "Mera", @id = "Mera" })
-                <br /><br />
-
-                <input type="button" class="btn btn-secondary" style="border-radius: 30px;" id="AddIngredientBtn" value="Dodaj sastojak" />
+        <div class="row justify-content-center pt-2 pb-2 ">
+            <div class="col-9 bg-info pozadina pb-2 pt-5 rounded">
+                <ul class="list-group list-group-flush" id="IngredientList"></ul>
             </div>
 
         </div>
 
-    </div>
-    <div class="row justify-content-center pt-2 pb-2 ">
-        <div class="col-9 bg-info pozadina pb-2 pt-5 rounded">
-            <ul class="list-group list-group-flush" id="IngredientList"></ul>
+        <div class="row justify-content-center pb-2">
+            <div class="col-9 bg-info pozadina pb-2 pt-2 rounded shadow-lg">
+                <div class="form-group shadow-lg ">
+                    @Html.Label("Postupak", new { @class = "h4 text-light " })
+                    @Html.TextAreaFor(m => m.Recipe.Procedure, new { @class = "form-control z-depth-1", @rows = "10", @placeholder = "Upišite postupak ovde..." })
+                    @Html.ValidationMessageFor(m => m.Recipe.Procedure)
+                </div>
+            </div>
         </div>
-
-    </div>
-
-    <div class="row justify-content-center pb-2">
-        <div class="col-9 bg-info pozadina pb-2 pt-2 rounded shadow-lg">
-            <div class="form-group shadow-lg ">
-                @Html.Label("Postupak", new { @class = "h4 text-light " })
-                @Html.TextAreaFor(m => m.Recipe.Procedure, new { @class = "form-control z-depth-1", @rows = "5", @placeholder = "Upišite postupak ovde..." })
-                @Html.ValidationMessageFor(m => m.Recipe.Procedure)
+        <div class="row justify-content-center">
+            <div class="col-9">
+                <span class="octicon octicon-alert"></span>
+                <div>Molimo vas da popunite sva polja. Morate dodati barem jednu sliku.</div>
+                <div>Možete maksimalno dodati 5 slika!</div>
 
             </div>
         </div>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-9">
-            <span class="octicon octicon-alert"></span>
-            <div>Molimo vas da popunite sva polja. Morate dodati barem jednu sliku.</div>
-            <div>Možete maksimalno dodati 5 slika!</div>
 
-        </div>
-    </div>
-
-    <div class="row justify-content-center pb-2">
-        <div id="Images" class="col-9 bg-info pozadina pb-5 pt-5 rounded" style="overflow-y: scroll; height: 400px;">
-            @for (int i = 0; i < 5; i++)
-            {
+        <div class="row justify-content-center pb-2">
+            <div id="Images" class="col-9 bg-info pozadina pb-5 pt-5 rounded" style="overflow-y: scroll; height: 400px;">
+                @for (int i = 0; i < 5; i++)
+                {
                 <div>
                     <input type="file" id="ImageFiles_@i" name="ImageFiles[@i]" style="display:none;" />
                     <input type="button" class="btn btn Mydefault btn-block  pt-3" value="Dodaj sliku..." onclick="document.getElementById('ImageFiles_@i').click();" />
-                    <img class="img-responsive rounded" src="" style="display:none;" />
-                    <input type="button" class="btn btn-secondary btn-sm" id="RemoveImage" value="x" style="display:none;" />
+                    <img id="Image_@i" class="img-responsive rounded" src="@((Model.ImagesPaths != null && Model.ImagesPaths[i] != "") ? Url.Content(Model.ImagesPaths[i]) : "")" style="display:none;" />
+                    <input type="button" class="btn btn-secondary btn-sm" id="RemoveImage" button_index="@i" value="x" style="display:none;" />
+                    @Html.Hidden("ImagesChanged[" + i + "]", "false", null)
+                    @Html.Hidden("ImagesRemoved[" + i + "]", "false", null)
                 </div>
-            }
+                    
+                }
+            </div>
         </div>
+        @Html.HiddenFor(m => m.Recipe.Id)
+        @Html.HiddenFor(m => m.Recipe.Ingredients, new { @id = "HiddenTextBox" })
+
+        <div class="row justify-content-center pb-2 pt-3">
+            <div class="col-9">
+                <button type="submit" class="Mybutton  btn-block">Dodaj recept</button>
+            </div>
+        </div>
+
     </div>
 
-    <div class="row justify-content-center pb-2 pt-3">
-        <div class="col-9">
-            <button type="submit" class="Mybutton  btn-block">Dodaj recept</button>
-        </div>
-    </div>
-
-</div>
-
- }
+}
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script>
 
-    $(document).ready(function () {        
+    $(document).ready(function () {
 
+        //prikazivanje slika iz edit akcije
+        for (var i = 0; i < 5; i++) {
+            if ($("#Image_" + i).attr("src") != "") {
+                $("#Image_" + i).show();
+                $("#Image_" + i).siblings('input[type="button"][id="RemoveImage"]').show();
+                $("#Image_" + i).siblings('input[type="button"][id!="RemoveImage"]').val("Slika " + i);
+            }
+        }
+
+        // prikazivanje sastojaka iz edit akcije
+        var listOfIngredients = $("#HiddenTextBox").val().split('|');
+        if (listOfIngredients != null && listOfIngredients.length > 0) {
+            for (var i = 0; i < listOfIngredients.length - 1; i++) {
+                $("#IngredientList").append('<li class="list-group-item">' + listOfIngredients[i] + '<input type="button" id="removeIngredient" class="btn btn-secondary btn-sm float-right" value="Ukloni"/>' + '</li>')
+            }
+        }
         // Dodavanje sastojka u listu IngredientList na klik dugmeta AddIngredientBtn
         $("#AddIngredientBtn").click(function () {
-            var selectedIngredient = $("#Mera").children("[value=" + $("#Mera").val() + "]").text();
 
-            if ($("#Sastojak").val() != "" && $("#Kolicina").val() != "" && selectedIngredient != -1) {
-                $("#IngredientList").append('<li class="list-group-item">' + $("#Sastojak").val() + " " + $("#Kolicina").val() + " " + selectedIngredient + '<input type="button" id="removeIngredient" class="btn btn-secondary btn-sm float-right" value="Ukloni"/>' + '</li>');
+            if ($("#Sastojak").val() != "" && $("#Kolicina").val() != "") {
+                $("#IngredientList").append('<li class="list-group-item">' + $("#Kolicina").val() + " " + $("#Sastojak").val() + " " + '<input type="button" id="removeIngredient" class="btn btn-secondary btn-sm float-right" value="Ukloni"/>' + '</li>');
 
             }
             $("#Sastojak").val("");
@@ -133,26 +141,27 @@
     // ucitavanje slika na promenu inputa
     $('input[id^="ImageFiles"]').change(function () {
         var Images = this.files;
-
         if (Images && Images[0]) {
             ReadImage(Images[0], $(this));
         }
 
         $(this).siblings('input[type="button"][id!="RemoveImage"]').val(this.files[0].name);
         $(this).siblings('input[type="button"][id="RemoveImage"]').show();
-
+        $(this).siblings('input[type="hidden"][name^="ImagesChanged"]').attr("value", "true");
     });
 
+    //brisanje slike klikom na njeno dugme sa id-em RemoveImage
     $(document).on("click", "#RemoveImage", function () {
         $(this).siblings("img").attr("src", "");
         $(this).siblings("img").hide();
         $(this).siblings('input[type="file"]').val('');
         $(this).siblings('input[type="button"][id!="RemoveImage"]').val("Dodaj sliku...");
+        $(this).siblings('input[type="hidden"][name^="ImagesRemoved"]').attr("value", "true");
         $(this).hide();
 
     });
 
-    // ucitavanje jedne slike 
+    // ucitavanje jedne slike
     var ReadImage = function (file, element) {
 
         var reader = new FileReader;
@@ -164,14 +173,14 @@
             image.src = _file.target.result;
             image.onload = function () {
 
-                element.siblings("img").attr("src", image.src);   
-                element.siblings("img").show();                  
+                element.siblings("img").attr("src", image.src);
+                element.siblings("img").show();
 
             }
         }
     }
 
-    // ova f-ja se poziva neposredno pre submita forme MyForm 
+    // ova f-ja se poziva neposredno pre submita forme MyForm
     // izvrsava se dodavanje sastojaka u HiddenTextBox
     // i provera da li ima slika u div-u Images
     document.getElementById("MyForm").onsubmit = function () {
@@ -184,25 +193,9 @@
         if ($("#Images").children("div").children('img[src!=""]').length == 0) {
             alert("Molimo Vas postavite bar jednu sliku...")
             return false;
-        }
-        else {         
-            // vrsi se iteriranje kroz img elemente u Images div-u
-            // tamo gde je src atribut prazan, brisu se, u suprotnom name atribut od odgovarajuceg inputa se postavlja
-            // tako da input bude bind - ovan sa odgovarajucim elementom liste ImageFiles 
-            var currId = 0;
-            for (var i = 0; i < $("#Images").children("div").children("img").length; i++) {
-                if ($("#Images").children("div").children('img').eq(i).attr("src") == "") {
-                    $("#Images").children("div").children('img').eq(i).parent().remove();
-                    i--;
-                }
-                else {
-                    $("#Images").children("div").children('img').eq(i).siblings('input[type="file"]').attr("name", "ImageFiles[" + currId + "]");
-                    currId++;
-                }
-            }
-            return true;
-        }
-    };    
+        }       
+        return true;    
+    };
 
 </script>
 

@@ -8,6 +8,6 @@ namespace CookBook.ViewModels
 
     public class GetRecipesByTypeViewModel
     {
-        public IEnumerable<Recipe> Recipes { get; set; }
+        public List<Recipe> Recipes { get; set; }
     }
 }

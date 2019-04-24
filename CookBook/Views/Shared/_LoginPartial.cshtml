@@ -7,7 +7,7 @@
 
 <ul class="nav navbar-nav navbar-right">
     <li>
-        @Html.ActionLink("Zdravo " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link", style = "color:white" })
+        @Html.Label("Zdravo " + User.Identity.GetUserName() + "!",htmlAttributes: new {  @class = "nav-link text-light", style = "color:white" })
     </li>
     <li class="nav-item active">@Html.ActionLink("Profil", "UserProfile", "Account", routeValues: null, htmlAttributes: new { @class = "nav-link", @style = "color:white" })</li>
     <li><a style="color:white" class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
@@ -18,8 +18,17 @@ else
 {
     <div >
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">@Html.ActionLink("Registruj se", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" })</li>
-            <li class="nav-item active">@Html.ActionLink("Uloguj se", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" , @class= "nav-link" })</li>
+
+            <li class="nav-item active">
+                <p class="octicon octicon-organization float-left" style="font-size:25px"></p>
+                @Html.ActionLink("Registrujte se", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link float-left" })
+
+            </li>
+            
+            <li class="nav-item active">
+                <p class="octicon octicon-person float-left" style="font-size:25px"></p>
+                @Html.ActionLink("Ulogujte se", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link float-left" })
+            </li>
         </ul>
     </div>
       

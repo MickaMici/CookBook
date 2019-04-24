@@ -279,11 +279,14 @@
     <Compile Include="Migrations\201904121851185_AddedDateToRecipes.Designer.cs">
       <DependentUpon>201904121851185_AddedDateToRecipes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904201254191_DeletedIngredientMeasures.cs" />
+    <Compile Include="Migrations\201904201254191_DeletedIngredientMeasures.Designer.cs">
+      <DependentUpon>201904201254191_DeletedIngredientMeasures.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Image.cs" />
-    <Compile Include="Models\IngredientMeasure.cs" />
     <Compile Include="Models\ListOfIngredients.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Recipe.cs" />
@@ -378,7 +381,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
@@ -416,7 +418,6 @@
     <Content Include="Views\Recipes\New.cshtml" />
     <Content Include="Views\Recipes\Index.cshtml" />
     <Content Include="Views\Recipes\Details.cshtml" />
-    <Content Include="Views\Recipes\CreateIngredient.cshtml" />
     <Content Include="Views\Recipes\Edit.cshtml" />
     <Content Include="Views\Recipes\GetRecipesByType.cshtml" />
     <Content Include="Views\Shared\_RecipeTypesPartial.cshtml" />
@@ -494,6 +495,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904121851185_AddedDateToRecipes.resx">
       <DependentUpon>201904121851185_AddedDateToRecipes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904201254191_DeletedIngredientMeasures.resx">
+      <DependentUpon>201904201254191_DeletedIngredientMeasures.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

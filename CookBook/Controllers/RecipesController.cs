@@ -34,8 +34,19 @@ namespace CookBook.Controllers
             //ako zelimo da osim recepata klase pozivamo i neku drugu 
             //moramo koristiti metodu include
             //npr var recipes= _context.recipes.include(r => r.recipesType (druga tabela znaci)
-            var recipes = _context.Recipes;
-            return View(recipes);
+            var recipes = _context.Recipes.ToList();
+            List<string> imagePaths = new List<string>();
+            foreach (var item in recipes)
+            {
+                imagePaths.Add((from Image in _context.Images where Image.RecipeId == item.Id select Image.Path).First());
+            }
+
+            var model = new ProfileViewModel()
+            {
+                Recipes = recipes,
+                ImagesPaths = imagePaths
+            };
+            return View(model);
         }
 
 
@@ -45,13 +56,11 @@ namespace CookBook.Controllers
            
             
             var recipeTypes = _context.RecipeTypes.ToList();
-            var ingredientMeasures = _context.IngredientMeasures.ToList();
 
             var viewModel = new RecipesViewModel
             {
                 Recipe = _context.Recipes.Include(r => r.RecipeType).Include(r=>r.User).SingleOrDefault(r => r.Id == id),
                 RecipeTypes = recipeTypes,
-                IngredientMeasures = ingredientMeasures
 
                 
             };
@@ -69,29 +78,42 @@ namespace CookBook.Controllers
         }
 
 
+        //akcija za update recepta
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            var recipeTypes = _context.RecipeTypes.ToList();
+
+            var viewModel = new RecipesViewModel
+            {
+                Recipe = _context.Recipes.Include(r => r.RecipeType).Include(r => r.User).SingleOrDefault(r => r.Id == id),
+                RecipeTypes = recipeTypes
+            };
+            var ingredients = viewModel.Recipe.Ingredients;
+            viewModel.SplitedIngredients = ingredients.Split('|').ToList();
+            var imagesPaths = (from Image in _context.Images
+                               where Image.RecipeId == id
+                               select Image.Path).ToList();
+            viewModel.ImagesPaths = imagesPaths;
+            return View("New", viewModel);
+        }
+
         [Authorize]
         public ActionResult New()
         {
             var recipeTypes = _context.RecipeTypes.ToList();
-            var ingredientMeasures = _context.IngredientMeasures.ToList();
             var viewModel = new RecipesViewModel
             {
-                RecipeTypes = recipeTypes,
-                IngredientMeasures = ingredientMeasures
-
+                Recipe = new Recipe(),
+                RecipeTypes = recipeTypes
             };
             return View(viewModel);
         }
 
-        public ActionResult Edit()
-        {
-            return View();
-        }
 
         [HttpPost]
         public ActionResult Create(RecipesViewModel viewModel)
         {
-
             var validImageTypes = new string[]
             {
                 "image/gif",
@@ -100,70 +122,134 @@ namespace CookBook.Controllers
                 "image/png"
             };
 
-            foreach (var file in viewModel.ImageFiles)
+            for (int i = 0; i < viewModel.ImageFiles.Count(); i++)
             {
-                if (file == null || file.ContentLength == 0)
+                if(viewModel.ImageFiles[i] != null && !viewModel.ImagesChanged[i] )
+                {
+                    ModelState.AddModelError("ImageFiles", "File not expected!");
+                }
+                else if (viewModel.ImageFiles[i] == null && viewModel.ImagesChanged[i] && !viewModel.ImagesRemoved[i])
                 {
                     ModelState.AddModelError("ImageFiles", "This field is required");
                 }
-                else if (!validImageTypes.Contains(file.ContentType))
+                //provera da slika nije prazna da ima podataka
+                else if(viewModel.ImageFiles[i] != null && viewModel.ImageFiles[i].ContentLength == 0)
+                {
+                    ModelState.AddModelError("ImageFiles", "This field is required");
+                }
+                else if (viewModel.ImageFiles[i] != null && !validImageTypes.Contains(viewModel.ImageFiles[i].ContentType))
                 {
                     ModelState.AddModelError("ImageFiles", "Please choose either a GIF, JPG or PNG image.");
                 }
             }
-
-
-
+            
             if (ModelState.IsValid)
             {
-
-                var user = UserManager.FindById(User.Identity.GetUserId());
-                viewModel.Recipe.User = user;
-                viewModel.Recipe.Date = DateTime.Now;
-                _context.Recipes.Add(viewModel.Recipe);
-                _context.SaveChanges();
-
-                var newRecipeId = viewModel.Recipe.Id;
-
-
-                var uploadDir = "~/Images/" + newRecipeId.ToString();
-                var fileIndex = 0;
-                Directory.CreateDirectory(Server.MapPath(uploadDir));
-                foreach (var file in viewModel.ImageFiles)
+                if (viewModel.Recipe.Id == 0) // Dodavanje novog recepta
                 {
-                    var imagePath = Path.Combine(Server.MapPath(uploadDir), fileIndex.ToString() + Path.GetExtension(file.FileName));
-                    var imageUrl = Path.Combine(uploadDir, fileIndex.ToString() + Path.GetExtension(file.FileName));
-                    file.SaveAs(imagePath);
-                    
-                    var image = new Image
+                    var user = UserManager.FindById(User.Identity.GetUserId());
+                    viewModel.Recipe.User = user;
+                    viewModel.Recipe.Date = DateTime.Now;
+                    _context.Recipes.Add(viewModel.Recipe);
+                    _context.SaveChanges();
+
+                    var newRecipeId = viewModel.Recipe.Id;
+
+
+                    var uploadDir = "~/Images/" + newRecipeId.ToString();
+                    var fileIndex = 0;
+                    Directory.CreateDirectory(Server.MapPath(uploadDir));
+                    foreach (var file in viewModel.ImageFiles)
                     {
-                        RecipeId = newRecipeId,
-                        Path=imageUrl
-                    };
+                        if(file != null)
+                        {
+                            var imagePath = Path.Combine(Server.MapPath(uploadDir), fileIndex.ToString() + Path.GetExtension(file.FileName));                            
+                            file.SaveAs(imagePath);
 
-                    _context.Images.Add(image);
-                    _context.SaveChanges();                
+                            var imageUrl = Path.Combine(uploadDir, fileIndex.ToString() + Path.GetExtension(file.FileName));
+                            var image = new Image
+                            {
+                                RecipeId = newRecipeId,
+                                Path = imageUrl
+                            };
 
-                    fileIndex++;
+                            _context.Images.Add(image);
+                            _context.SaveChanges();                            
+                        }
+                        else
+                        {
+                            var image = new Image
+                            {
+                                RecipeId = newRecipeId,
+                                Path = ""
+                            };
+
+                            _context.Images.Add(image);
+                            _context.SaveChanges();
+                        }
+
+                        fileIndex++;
+                    }
+
+                    return RedirectToAction("Details", "Recipes", new { id = newRecipeId });
                 }
+                else // Menjanje postojeceg recepta
+                {
+                    var recipeInDb = _context.Recipes.Single(r => r.Id == viewModel.Recipe.Id);
+                    recipeInDb.Name = viewModel.Recipe.Name;
+                    recipeInDb.RecipeType = viewModel.Recipe.RecipeType;
+                    recipeInDb.Ingredients = viewModel.Recipe.Ingredients;
+                    recipeInDb.Procedure = viewModel.Recipe.Procedure;
 
-                return RedirectToAction("Details", "Recipes", new { id = newRecipeId });
+                    var images = (from Image in _context.Images
+                                  where Image.RecipeId == viewModel.Recipe.Id
+                                  select Image).ToList();
+                    var uploadDir = "~/Images/" + viewModel.Recipe.Id.ToString();
+                    for (int i = 0; i < viewModel.ImageFiles.Count(); i++)
+                    {
+                        if (viewModel.ImageFiles[i] == null)
+                        {
+                            if(viewModel.ImagesRemoved[i] && images[i].Path != "")
+                            {
+                                System.IO.File.Delete(Server.MapPath(images[i].Path));
+                                images[i].Path = "";
+                            }                            
+                        }
+                        else
+                        {
+                            if (viewModel.ImagesChanged[i])
+                            {
+                                if(System.IO.File.Exists(Server.MapPath(images[i].Path)))
+                                {
+                                    System.IO.File.Delete(Server.MapPath(images[i].Path));
+                                    images[i].Path = "";
+                                }
+                                var imagePath = Path.Combine(Server.MapPath(uploadDir), i.ToString() + Path.GetExtension(viewModel.ImageFiles[i].FileName));
+                                var imageUrl = Path.Combine(uploadDir, i.ToString() + Path.GetExtension(viewModel.ImageFiles[i].FileName));
+
+                                viewModel.ImageFiles[i].SaveAs(imagePath);
+                                images[i].Path = imageUrl;
+                            }
+                        }
+                    }                    
+                    
+                    _context.SaveChanges();
+                    return RedirectToAction("Details", "Recipes", new { id = viewModel.Recipe.Id });
+                }
             }
             else
             {
                 var recipeTypes = _context.RecipeTypes.ToList();
-                var ingredientMeasures = _context.IngredientMeasures.ToList();
                 var viewModel1 = new RecipesViewModel
                 {
-                    RecipeTypes = recipeTypes,
-                    IngredientMeasures = ingredientMeasures
-
+                    RecipeTypes = recipeTypes
                 };
-                return View("New",viewModel1);
+                return View("New", viewModel1);
 
-            }           
-
+            }
+            
         }
+      
 
         //akcija koja se poziva u parcijalnom view-u (_RecipeTypesPartial)
         // iz baze pokupi sve recepte koji imaju konkretan id tj. tip recepta
@@ -181,15 +267,45 @@ namespace CookBook.Controllers
         }
 
         //akcija koja pravi parcijalni view
-        //[ChildActionOnly]
+        
         public ActionResult RecipeTypes()
         {
             var model = _context.RecipeTypes.ToList();
             return PartialView("_RecipeTypesPartial", model);
         }
 
-        
 
+        //akcija za brisanje recepta iz baze koja se poziva klikom na dugme u Profile View-u 
+        
+        public ActionResult Delete(int id)
+        {
+            var recipe = _context.Recipes.SingleOrDefault(r => r.Id == id);
+
+           
+            if(recipe == null)
+            {
+                HttpNotFound();
+            }
+            _context.Recipes.Remove(recipe);
+            _context.SaveChanges();
+
+            //brisanje slika iz baze podataka
+            var images = (from Image in _context.Images
+                          where Image.RecipeId == id
+                          select Image).ToList();
+
+            foreach (var item in images)
+            {
+                _context.Images.Remove(item);
+                _context.SaveChanges();
+            }
+
+            //brisanje slika iz file system-a
+            string mappedPath = Server.MapPath(@"~/Images/" + id);
+            Directory.Delete(mappedPath, true);
+
+            return RedirectToAction("UserProfile", "Account");
+        }
 
        
 
