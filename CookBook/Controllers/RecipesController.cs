@@ -281,6 +281,7 @@ namespace CookBook.Controllers
 
 
         //akcija za brisanje recepta iz baze koja se poziva klikom na dugme u Profile View-u 
+        //[ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
             var recipe = _context.Recipes.SingleOrDefault(r => r.Id == id);
@@ -307,11 +308,7 @@ namespace CookBook.Controllers
             //brisanje slika iz file system-a
             string mappedPath = Server.MapPath(@"~/Images/" + id);
             Directory.Delete(mappedPath, true);
-
-            return Json(true, JsonRequestBehavior.AllowGet);
+            return Json(new { result = "Redirect", url = Url.Action("Index", "Recipes") }, JsonRequestBehavior.AllowGet);
         }
-
-       
-
     }
 }

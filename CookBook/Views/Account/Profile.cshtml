@@ -4,12 +4,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
+@Html.AntiForgeryToken()
 <div class="myJumbotron text-center text-light" style="font-size:40px">Dobrodošli @Model.User.UserName</div>
 <br /><br />
 
 <div class="container">
- 
+
     <div class="row">
         <div class="col-5 border" style="background-color:aliceblue">
             <h3>Vaši podaci:</h3><br />
@@ -19,64 +19,64 @@
             <p style="font-size:20px">UserName: @Model.User.UserName</p>
         </div>
     </div><br /><br />
-       <div class="float-right">
+    <div class="float-right">
         @Html.ActionLink("Dodajte novi recept", "New", "Recipes", routeValues: null, htmlAttributes: new { @style = "font-size:20px", @class = "btn btn-danger" })
-        </div><br /><br />
-    
+    </div><br /><br />
+
 
     <div class="row" id="rowDiv">
         <h4>Recepti koje ste dodavali:</h4><br /><br />
-    <input id="searchInput" class="form-control" type="text" placeholder="Search" aria-label="Search"><br /><br />
+        <input id="searchInput" class="form-control" type="text" placeholder="Search" aria-label="Search"><br /><br />
         @foreach (var item in Model.Recipes)
         {
 
             <div class="col-9">
                 <div>
-                    @Html.ActionLink(item.Name, "Details", "Recipes", routeValues: new { @id = item.Id }, htmlAttributes: new { @style = "font-size:30px", @class="js-a" })
+                    @Html.ActionLink(item.Name, "Details", "Recipes", routeValues: new { @id = item.Id }, htmlAttributes: new { @style = "font-size:30px", @class = "js-a" })
                 </div>
                 <div>
                     <img class="rounded shadow-lg img-thumbnail" src="@Url.Content(Model.ImagesPaths[Model.Recipes.IndexOf(item)])" style="width:100%" />
                 </div>
                 <button data-recipe-id="@item.Id" class="btn btn-secondary btn-link text-light js-delete">Obrišite recept</button>
-                @Html.ActionLink("Izmenite recept", "Edit", "Recipes", routeValues: new { @id = item.Id }, htmlAttributes: new {@class= "btn btn-secondary" })
+                @Html.ActionLink("Izmenite recept", "Edit", "Recipes", routeValues: new { @id = item.Id }, htmlAttributes: new { @class = "btn btn-secondary" })
                 <br /><br />
             </div>
         }
     </div>
 </div>
 
-    <script>
-        $(document).ready(function () {
-            $("#searchInput").change(function () {
-                var filter = $(this).val().toUpperCase();
-                var a = $(".js-a");
-                var txtValue;
-                for (var i = 0; i < a.length; i++) {
-                    txtValue = a[i].textContent || a[i].innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        $(a[i]).parents().eq(1).show();
-                    } else {
-                        $(a[i]).parents().eq(1).hide();
-                    }
+<script>
+    $(document).ready(function () {
+        $("#searchInput").change(function () {
+            var filter = $(this).val().toUpperCase();
+            var a = $(".js-a");
+            var txtValue;
+            for (var i = 0; i < a.length; i++) {
+                txtValue = a[i].textContent || a[i].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    $(a[i]).parents().eq(1).show();
+                } else {
+                    $(a[i]).parents().eq(1).hide();
                 }
-            });
-
-
-            $("#rowDiv .js-delete").on("click", function () {
-                var button = $(this);
-                bootbox.confirm("Da li ste sigurni da želite da izbrišete ovaj recept?", function (result) {
-                    if (result) {
-                        var Id = button.attr("data-recipe-id");
-                        $.ajax({
-                            url: "/Recipes/Delete/" + Id,             
-                            success: function () {
-                                button.parent().remove();
-                            }
-                        });
-                    }
-                });               
-            })
+            }
         });
 
-    </script>
+
+        $("#rowDiv .js-delete").on("click", function () {
+            var button = $(this);
+            bootbox.confirm("Da li ste sigurni da želite da izbrišete ovaj recept?", function (result) {
+                if (result) {
+                    var Id = button.attr("data-recipe-id");
+                    $.ajax({
+                        url: "/Recipes/Delete/" + Id,
+                        success: function () {
+                            button.parent().remove();
+                        }
+                    });
+                }
+            });
+        })
+    });
+
+</script>
 

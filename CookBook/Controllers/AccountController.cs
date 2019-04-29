@@ -15,9 +15,6 @@ using System.Collections.Generic;
 
 namespace CookBook.Controllers
 {
-   
-
-
     [Authorize]
     public class AccountController : Controller
     {
@@ -29,8 +26,6 @@ namespace CookBook.Controllers
         {
             _context = new ApplicationDbContext();
         }
-
-
       
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {

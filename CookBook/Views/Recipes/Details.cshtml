@@ -1,4 +1,5 @@
-﻿@model CookBook.ViewModels.RecipesViewModel
+﻿@using Microsoft.AspNet.Identity
+@model CookBook.ViewModels.RecipesViewModel
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,73 +8,80 @@
 
 <body class="myBody">
     <br /><br />
- 
-          <div class="container pt-5 pb-2 shadow-lg">
+    @Html.AntiForgeryToken()
 
-              <div class="row">
-                  <div class="col-12 justify-content-center">
-                      <h1 class="text-center">@Model.Recipe.Name</h1>
-                  </div>
-              </div>
-              <br /><br /><br />
-              <div class="row">
-                  <div class="col-8 justify-content-center ">
-                      <h4 >Dodao: </h4>
-                      <p style="font-size: 25px;">@Model.Recipe.User.UserName</p>
-                  </div>
-                  <div class="col-4">
-                  </div>
-              </div>
-              <br />   <br />   <br />
-              <div class="row">
-                  <div class="col-12 justify-content-center">
-                      <h4>Datum dodavanja : </h4>
-                      <p>@Model.Recipe.Date.ToShortDateString()</p>
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="col-12 justify-content-center">
-                      <h3>Tip recepta :</h3>
-                      <p style="font-size: 25px;">@Model.Recipe.RecipeType.Name</p>
-                      <br />
-                  </div>
-              </div>
-              <br />
-              <div class="row">
-                  <div class="col-9">
-                      <h3>Sastojci</h3>
-                      <ul>
-                          @for (int i = 0; i < Model.SplitedIngredients.Count() - 1; i++)
-                          {
-                              <li style="font-size: 20px;">@Model.SplitedIngredients[i]</li>
-                          }
-                      </ul>
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="col-12">
-                      <div class="rounded shadow" style="background-color:#c9f4f3; font-size: 20px;">
-                          <h3>Postupak</h3>
-                          @Model.Recipe.Procedure
+    <div class="container pt-5 pb-2 shadow-lg">
 
-                      </div>
-                  </div>
-              </div>
-              <br /><br />
-              <div class="Myrow">
-                  @foreach (var item in Model.ImagesPaths)
-                  {
-                      if(item != "")
-                      {
-                          <div class="Mycolumn">
-                              <img src="@Url.Content(item)" style="width:100%; height:150px" onclick="myFunction(this); " class="Mythumbnail" data-toggle="tooltip" data-placement="top" title="Kliknite na sliku za veci prikaz" />
-                          </div>
-                      }
-                  }
-              </div>
-          </div>
+        <div class="row">
+            <div class="col-12 justify-content-center">
+                <h1 class="text-center">@Model.Recipe.Name</h1>
+            </div>
+        </div>
+        <br /><br /><br />
+        <div class="row">
+            <div class="col-8 justify-content-center ">
+                <h4>Dodao: </h4>
+                <p style="font-size: 25px;">@Model.Recipe.User.UserName</p>
+            </div>
+            <div class="col-4">
+            </div>
+        </div>
+        <br />   <br />   <br />
+        <div class="row">
+            <div class="col-8 justify-content-center">
+                <h4>Datum dodavanja : </h4>
+                <p>@Model.Recipe.Date.ToShortDateString()</p>
+            </div>
+            <div class="col-4">
+                @if (Model.Recipe.User.Id == User.Identity.GetUserId() || User.IsInRole("Admin"))
+                {
+                    <button data-recipe-id="@Model.Recipe.Id" class="btn btn-secondary btn-link text-light js-delete">Obrišite recept</button>
+                    @Html.ActionLink("Izmenite recept", "Edit", "Recipes", routeValues: new { @id = Model.Recipe.Id }, htmlAttributes: new { @class = "btn btn-secondary" })
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 justify-content-center">
+                <h3>Tip recepta :</h3>
+                <p style="font-size: 25px;">@Model.Recipe.RecipeType.Name</p>
+                <br />
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-9">
+                <h3>Sastojci</h3>
+                <ul>
+                    @for (int i = 0; i < Model.SplitedIngredients.Count() - 1; i++)
+                    {
+                        <li style="font-size: 20px;">@Model.SplitedIngredients[i]</li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="rounded shadow" style="background-color:#c9f4f3; font-size: 20px;">
+                    <h3>Postupak</h3>
+                    @Model.Recipe.Procedure
+                </div>
+            </div>
+        </div>
+        <br /><br />
+        <div class="Myrow">
+            @foreach (var item in Model.ImagesPaths)
+            {
+                if (item != "")
+                {
+                    <div class="Mycolumn">
+                        <img src="@Url.Content(item)" style="width:100%; height:150px" onclick="myFunction(this); " class="Mythumbnail" data-toggle="tooltip" data-placement="top" title="Kliknite na sliku za veci prikaz" />
+                    </div>
+                }
+            }
+        </div>
+    </div>
     <br /><br />
-    <div class="Mycontainer shadow-lg" >
+    <div class="Mycontainer shadow-lg">
         <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
         <img id="expandedImg" style="width:100%; border-radius:30px;">
         <div id="imgtext"></div>
@@ -86,6 +94,26 @@
             imgText.innerHTML = imgs.alt;
             expandImg.parentElement.style.display = "block";
         }
+
+        $(document).ready(function () {
+            $(".js-delete").on("click", function () {
+                var button = $(this);
+                bootbox.confirm("Da li ste sigurni da želite da izbrišete ovaj recept?", function (result) {
+                    if (result) {
+                        var Id = button.attr("data-recipe-id");
+                        $.ajax({
+                            url: "/Recipes/Delete/" + Id,
+                            success: function (response) {
+                                if (response.result == 'Redirect')
+                                    window.location = response.url;
+                               
+                            }
+                        });
+                    }
+                });
+            });
+        });
+
     </script>
 
 </body>
