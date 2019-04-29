@@ -64,34 +64,38 @@ namespace CookBook.Models
 
     public class RegisterViewModel
     {
-        [Required]
+        [Required (ErrorMessage ="Morate  uneti ime")]
         [StringLength(100)]
         [Display(Name ="Ime")]
         public string FirstName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Morate  uneti prezime")]
         [StringLength(100)]
         [Display(Name = "Prezime")]
         public string LastName { get; set; }
 
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "Morate  uneti e-mail")]
+        [EmailAddress (ErrorMessage ="E-mail mora biti u ispravnom formatu")]
+        [System.Web.Mvc.Remote("CheckExistingEmail", "Account", HttpMethod = "POST", ErrorMessage = "Email već postoji")]
         [Display(Name = "E-mail")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Morate  uneti lozinku")]
         [StringLength(100, ErrorMessage = " {0} mora imati najmanje {2} karaktera.", MinimumLength = 8)]
         [DataType(DataType.Password)]
+        [RegularExpression("^((?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])|(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[^a-zA-Z0-9])|(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[^a-zA-Z0-9])|(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^a-zA-Z0-9])).{8,}$", ErrorMessage = "Lozinke moraju biti duge najmanje 8 karaktera i zadovoljiti barem 3 od 4 sledeća uslova: jedno veliko slovo, jedno malo slovo, jedan broj i jedan specijalni karakter")]
         [Display(Name = "Lozinka")]
         public string Password { get; set; }
 
+        [Required(ErrorMessage = "Morate ponoviti lozinku")]
         [DataType(DataType.Password)]
         [Display(Name = "Ponovite lozinku")]
         [Compare("Password", ErrorMessage = "Lozinka i ponovljena lozinka se ne poklapaju.")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Morate  uneti korisničko ime")]
         [StringLength(100)]
+        [System.Web.Mvc.Remote("CheckExistingUserName", "Account", HttpMethod = "POST", ErrorMessage = "Korisničko ime već postoji")]
         [Display(Name = "Korisničko ime")]
         public string UserName { get; set; }
     }

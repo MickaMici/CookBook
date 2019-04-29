@@ -36,7 +36,6 @@ namespace CookBook.Models
 
         public ApplicationUser User { get; set; }
 
-        
         public DateTime Date { get; set; }
 
     }

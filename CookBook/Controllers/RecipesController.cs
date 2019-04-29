@@ -31,14 +31,12 @@ namespace CookBook.Controllers
 
         public ActionResult Index()
         {
-            //ako zelimo da osim recepata klase pozivamo i neku drugu 
-            //moramo koristiti metodu include
-            //npr var recipes= _context.recipes.include(r => r.recipesType (druga tabela znaci)
+           
             var recipes = _context.Recipes.ToList();
             List<string> imagePaths = new List<string>();
             foreach (var item in recipes)
             {
-                imagePaths.Add((from Image in _context.Images where Image.RecipeId == item.Id select Image.Path).First());
+                imagePaths.Add((from Image in _context.Images where Image.RecipeId == item.Id && Image.Path != "" select Image.Path).First());
             }
 
             var model = new ProfileViewModel()
@@ -46,7 +44,15 @@ namespace CookBook.Controllers
                 Recipes = recipes,
                 ImagesPaths = imagePaths
             };
-            return View(model);
+            if (User.IsInRole("Admin"))
+            {
+                return View("IndexForAdmin",model);
+            }
+            else
+            {
+                return View("IndexForUser",model);
+
+            }
         }
 
 
@@ -64,8 +70,6 @@ namespace CookBook.Controllers
 
                 
             };
-
-           
             
             var ingredients = viewModel.Recipe.Ingredients;
             viewModel.SplitedIngredients = ingredients.Split('|').ToList();
@@ -112,6 +116,7 @@ namespace CookBook.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(RecipesViewModel viewModel)
         {
             var validImageTypes = new string[]
@@ -276,7 +281,6 @@ namespace CookBook.Controllers
 
 
         //akcija za brisanje recepta iz baze koja se poziva klikom na dugme u Profile View-u 
-        
         public ActionResult Delete(int id)
         {
             var recipe = _context.Recipes.SingleOrDefault(r => r.Id == id);
@@ -304,7 +308,7 @@ namespace CookBook.Controllers
             string mappedPath = Server.MapPath(@"~/Images/" + id);
             Directory.Delete(mappedPath, true);
 
-            return RedirectToAction("UserProfile", "Account");
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
 
        

@@ -17,16 +17,18 @@
               </div>
               <br /><br /><br />
               <div class="row">
-                  <div class="col-12 justify-content-center ">
+                  <div class="col-8 justify-content-center ">
                       <h4 >Dodao: </h4>
                       <p style="font-size: 25px;">@Model.Recipe.User.UserName</p>
+                  </div>
+                  <div class="col-4">
                   </div>
               </div>
               <br />   <br />   <br />
               <div class="row">
                   <div class="col-12 justify-content-center">
                       <h4>Datum dodavanja : </h4>
-                      <p>@Model.Recipe.Date</p>
+                      <p>@Model.Recipe.Date.ToShortDateString()</p>
                   </div>
               </div>
               <div class="row">
@@ -64,19 +66,11 @@
                       if(item != "")
                       {
                           <div class="Mycolumn">
-                              <img src="@Url.Content(item)" style="width:100%" onclick="myFunction(this); " class="Mythumbnail" data-toggle="tooltip" data-placement="top" title="Kliknite na sliku za veci prikaz" />
+                              <img src="@Url.Content(item)" style="width:100%; height:150px" onclick="myFunction(this); " class="Mythumbnail" data-toggle="tooltip" data-placement="top" title="Kliknite na sliku za veci prikaz" />
                           </div>
                       }
-                  
-
                   }
               </div>
-
-
-
-
-
-
           </div>
     <br /><br />
     <div class="Mycontainer shadow-lg" >

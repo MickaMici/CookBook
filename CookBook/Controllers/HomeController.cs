@@ -23,7 +23,7 @@ namespace CookBook.Controllers
             List<string> imagePaths = new List<string>();
             foreach (var item in recipes)
             {
-                imagePaths.Add((from Image in _context.Images where Image.RecipeId == item.Id select Image.Path).First());
+                imagePaths.Add((from Image in _context.Images where Image.RecipeId == item.Id && Image.Path != "" select Image.Path).First());
             }
             var model = new RecipesViewModel
             {

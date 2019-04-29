@@ -32,7 +32,7 @@
 
             <div class="col-9">
                 <div>
-                    @Html.ActionLink(item.Name, "Details", "Recipes", routeValues: new { @id = item.Id }, htmlAttributes: new { @style = "font-size:30px" })
+                    @Html.ActionLink(item.Name, "Details", "Recipes", routeValues: new { @id = item.Id }, htmlAttributes: new { @style = "font-size:30px", @class="js-a" })
                 </div>
                 <div>
                     <img class="rounded shadow-lg img-thumbnail" src="@Url.Content(Model.ImagesPaths[Model.Recipes.IndexOf(item)])" style="width:100%" />
@@ -45,12 +45,11 @@
     </div>
 </div>
 
-@section scripts{
     <script>
         $(document).ready(function () {
             $("#searchInput").change(function () {
                 var filter = $(this).val().toUpperCase();
-                var a = $("#rowDiv").find("a");
+                var a = $(".js-a");
                 var txtValue;
                 for (var i = 0; i < a.length; i++) {
                     txtValue = a[i].textContent || a[i].innerText;
@@ -60,25 +59,24 @@
                         $(a[i]).parents().eq(1).hide();
                     }
                 }
-
             });
 
 
             $("#rowDiv .js-delete").on("click", function () {
                 var button = $(this);
-                if (confirm("Da li ste sigurni da zelite da izbrišete ovaj recept? ")) {
-                    $.ajax({
-                        url: "/Recipes/Delete/",
-                        data: { id: $(this).attr("data-recipe-id") },
-                        success: function () {
-                            button.parent().remove();              
-                        }
-                    });
-                }
+                bootbox.confirm("Da li ste sigurni da želite da izbrišete ovaj recept?", function (result) {
+                    if (result) {
+                        var Id = button.attr("data-recipe-id");
+                        $.ajax({
+                            url: "/Recipes/Delete/" + Id,             
+                            success: function () {
+                                button.parent().remove();
+                            }
+                        });
+                    }
+                });               
             })
         });
 
     </script>
 
-
-}

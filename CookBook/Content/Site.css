@@ -16,15 +16,8 @@
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-/*
-    input,
-select,
-textarea {
-    max-width: 280px;
-}
 
-*/
+
 
 
 .pozadina {
@@ -37,13 +30,13 @@ textarea {
 
 
 .naslov {
-    margin-top:10px;
-
-    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1e5799+0,7db9e8+100&1+0,0+100;Blue+to+Transparent */
-    background: -moz-linear-gradient(top, rgba(30,87,153,1) 0%, rgba(125,185,232,0) 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(top, rgba(30,87,153,1) 0%,rgba(125,185,232,0) 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to bottom, rgba(30,87,153,1) 0%,rgba(125,185,232,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#007db9e8',GradientType=0 ); /* IE6-9 */
+    margin-top: 10px;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#febbbb+57,febbbb+57,fe9090+62,fe9090+62,ff5c5c+100 */
+    background: rgb(254,187,187); /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover, rgba(254,187,187,1) 57%, rgba(254,187,187,1) 57%, rgba(254,144,144,1) 62%, rgba(254,144,144,1) 62%, rgba(255,92,92,1) 100%); /* FF3.6-15 */
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(254,187,187,1) 57%,rgba(254,187,187,1) 57%,rgba(254,144,144,1) 62%,rgba(254,144,144,1) 62%,rgba(255,92,92,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: radial-gradient(ellipse at center, rgba(254,187,187,1) 57%,rgba(254,187,187,1) 57%,rgba(254,144,144,1) 62%,rgba(254,144,144,1) 62%,rgba(255,92,92,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#febbbb', endColorstr='#ff5c5c',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
 
@@ -90,12 +83,6 @@ textarea {
 .input-validation-error {
     border: 2px solid red;
 }
-/*.validation-summary-valid {
-    display: none;
-}
-.field-validation-valid {
-    display: none;
-}*/
 
 .Mydefault {
     border: 2px solid black;
@@ -206,4 +193,28 @@ textarea {
     margin-top: 5px;
     background-color: #1cedca;
     border-radius: 0.3rem;
+}
+
+.classForIndexPage {
+    /* Permalink - use to edit and share this gradient: /*http://colorzilla.com/gradient-editor/#d2dfed+0,c8d7eb+26,bed0ea+51,afc7e8+62,a6c0e3+71,bad0ef+75,99b5db+88,799bc8+100 
+    background: rgb(210,223,237);  Old browsers 
+    background: -moz-radial-gradient(center, ellipse cover, rgba(210,223,237,1) 0%, rgba(200,215,235,1) 26%, rgba(190,208,234,1) 51%, rgba(175,199,232,1) 62%, rgba(166,192,227,1) 71%, rgba(186,208,239,1) 75%, rgba(153,181,219,1) 88%, rgba(121,155,200,1) 100%);  FF3.6-15 
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(210,223,237,1) 0%,rgba(200,215,235,1) 26%,rgba(190,208,234,1) 51%,rgba(175,199,232,1) 62%,rgba(166,192,227,1) 71%,rgba(186,208,239,1) 75%,rgba(153,181,219,1) 88%,rgba(121,155,200,1) 100%);  Chrome10-25,Safari5.1-6 
+    background: radial-gradient(ellipse at center, rgba(210,223,237,1) 0%,rgba(200,215,235,1) 26%,rgba(190,208,234,1) 51%,rgba(175,199,232,1) 62%,rgba(166,192,227,1) 71%,rgba(186,208,239,1) 75%,rgba(153,181,219,1) 88%,rgba(121,155,200,1) 100%);  W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ 
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d2dfed', endColorstr='#799bc8',GradientType=1 );  IE6-9 fallback on horizontal gradient */
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#c8d7eb+13,bed0ea+60,afc7e8+62,a6c0e3+71,bad0ef+75,99b5db+88,799bc8+100 */
+    background: rgb(200,215,235); /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover, rgba(200,215,235,1) 13%, rgba(190,208,234,1) 60%, rgba(175,199,232,1) 62%, rgba(166,192,227,1) 71%, rgba(186,208,239,1) 75%, rgba(153,181,219,1) 88%, rgba(121,155,200,1) 100%); /* FF3.6-15 */
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(200,215,235,1) 13%,rgba(190,208,234,1) 60%,rgba(175,199,232,1) 62%,rgba(166,192,227,1) 71%,rgba(186,208,239,1) 75%,rgba(153,181,219,1) 88%,rgba(121,155,200,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: radial-gradient(ellipse at center, rgba(200,215,235,1) 13%,rgba(190,208,234,1) 60%,rgba(175,199,232,1) 62%,rgba(166,192,227,1) 71%,rgba(186,208,239,1) 75%,rgba(153,181,219,1) 88%,rgba(121,155,200,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c8d7eb', endColorstr='#799bc8',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+.classForNew {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fcecfc+50,fba6e1+76,fd89d7+79,ff7cd8+100 */
+    background: rgb(252,236,252); /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover, rgba(252,236,252,1) 50%, rgba(251,166,225,1) 76%, rgba(253,137,215,1) 79%, rgba(255,124,216,1) 100%); /* FF3.6-15 */
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(252,236,252,1) 50%,rgba(251,166,225,1) 76%,rgba(253,137,215,1) 79%,rgba(255,124,216,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: radial-gradient(ellipse at center, rgba(252,236,252,1) 50%,rgba(251,166,225,1) 76%,rgba(253,137,215,1) 79%,rgba(255,124,216,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcecfc', endColorstr='#ff7cd8',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }

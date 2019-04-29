@@ -1,0 +1,67 @@
+﻿@model CookBook.ViewModels.ProfileViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div class="container shadow-lg">
+
+    <h2>Recepti</h2>
+    @if (!Model.Recipes.Any())
+    {
+        <p>Nazalost, nema jos nijednog recepta. </p>
+    }
+    else
+    {
+        <table id="rowDiv" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Slika</th>
+                    <th>Edit</th>
+                    <th>Obrisi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Recipes)
+                {
+                    <tr>
+                        <td>                                    
+                            @Html.ActionLink(item.Name, "Details", "Recipes", routeValues: new { @id = item.Id }, htmlAttributes: new { @style = "font-size:20px" })
+                      
+                            <img class="rounded shadow-lg " src="@Url.Content(Model.ImagesPaths[Model.Recipes.IndexOf(item)])" style="width:100%"/>                           
+                        </td>
+                        <td>@Html.ActionLink("Izmeni", "Edit", "Recipes", routeValues: new { @id = item.Id }, htmlAttributes: new { @class = "btn btn-secondary" }) </td>
+                        <td> 
+                            <button data-recipe-id="@item.Id" class="btn btn-secondary btn-link text-light js-delete">Obriši</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+<script>
+    $(document).ready(function () {
+        var table = $("#rowDiv").DataTable({
+            "info": false
+        });
+        $("#rowDiv .js-delete").on("click", function () {
+            var button = $(this);
+            if (confirm("Da li ste sigurni da zelite da izbrišete ovaj recept? ")) {
+                var Id = button.attr("data-recipe-id");
+                $.ajax({                    
+                    url: "/Recipes/Delete/" + Id,  
+                    success: function () {
+                        table.row(button.parents("tr")).remove().draw();
+                    }
+                });
+            }
+        })
+    })
+
+</script>
+
+

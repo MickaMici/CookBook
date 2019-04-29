@@ -437,7 +437,41 @@ namespace CookBook.Controllers
             return View(model);
         }
 
-       
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult CheckExistingEmail(string Email)
+        {
+            try
+            {
+                return Json(!IsEmailExists(Email));
+            }
+            catch (Exception ex)
+            {
+                return Json(false);
+            }
+        }
+
+        private bool IsEmailExists(string email)
+            => UserManager.FindByEmail(email) != null;
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult CheckExistingUserName(string UserName)
+        {
+            try
+            {
+                return Json(!IsUserNameExists(UserName));
+            }
+            catch (Exception ex)
+            {
+                return Json(false);
+            }
+        }
+
+        private bool IsUserNameExists(string UserName)
+            => UserManager.FindByName(UserName) != null;
+
+
         // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
