@@ -10,7 +10,7 @@
 </style>
 <body class="classForIndexPage">
     <div class="pt-3 pb-3 naslov shadow-lg rounded">
-        <h1 class="text-primary text-center">Dobrodošli na CookBook!</h1>
+        <h1 class="text-light text-center">Dobrodošli na CookBook!</h1>
     </div><br />
     <div class="container bg-light shadow-lg pt-3 pb-3 pl-3 pr-3">
         <div class="row rounded  ">
@@ -122,7 +122,12 @@
 
         $(document).ready(function () {
             $("#GetInfo").click(function () {
-                $("#info").show();
+                if ($("#info").attr("style").indexOf("display:none;") >-1 ) {
+                    $("#info").show();
+                }
+                else {
+                    $("#info").hide();
+                }
             })
         }
         )

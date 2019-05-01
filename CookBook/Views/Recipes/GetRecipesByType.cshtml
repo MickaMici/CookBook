@@ -2,13 +2,25 @@
 
 
 
-<body class="myBody">
-
-
-    @foreach (var item in Model.Recipes)
+<body class="myBody classForPartialView">
+    <br /><br /><br /><br />
+    @if (!Model.Recipes.Any())
     {
-        <div>@item.Name</div>
+        <p class="text-light">Nazalost, nema jos nijednog recepta. </p>
     }
+    <div class="row">
+        @foreach (var item in Model.Recipes)
+        {
+            <div class="col-lg-4 col-md-8 col-sm-10 col-xs-12">
+                <div>
+                    @Html.ActionLink(item.Name, "Details", "Recipes", routeValues: new { @id = item.Id }, htmlAttributes: new { @style = "font-size:30px" })
+                </div>
+                <div>
+                    <img class="rounded shadow-lg img-thumbnail img-fluid" src="@Url.Content(Model.ImagesPaths[Model.Recipes.IndexOf(item)])" style="width:100%; height:300px" />
+                </div>
+            </div>
+        }
+    </div>
 
 
 
@@ -28,4 +40,6 @@
 
 
 
-    </body>
+
+
+</body>

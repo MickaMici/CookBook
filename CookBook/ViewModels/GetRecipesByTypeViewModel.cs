@@ -9,5 +9,7 @@ namespace CookBook.ViewModels
     public class GetRecipesByTypeViewModel
     {
         public List<Recipe> Recipes { get; set; }
+        public List<string> ImagesPaths { get; set; }
+
     }
 }

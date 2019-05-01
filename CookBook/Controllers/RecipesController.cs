@@ -59,16 +59,13 @@ namespace CookBook.Controllers
         [HttpGet]
         public ActionResult Details(int id)
         {
-           
-            
+                      
             var recipeTypes = _context.RecipeTypes.ToList();
 
             var viewModel = new RecipesViewModel
             {
                 Recipe = _context.Recipes.Include(r => r.RecipeType).Include(r=>r.User).SingleOrDefault(r => r.Id == id),
-                RecipeTypes = recipeTypes,
-
-                
+                RecipeTypes = recipeTypes               
             };
             
             var ingredients = viewModel.Recipe.Ingredients;
@@ -113,8 +110,7 @@ namespace CookBook.Controllers
             };
             return View(viewModel);
         }
-
-
+     
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(RecipesViewModel viewModel)
@@ -263,10 +259,15 @@ namespace CookBook.Controllers
             var recipes = (from Recipe in _context.Recipes
                                where Recipe.RecipeTypeId == id
                                select Recipe).ToList();
-            
+            List<string> imagePaths = new List<string>();
+            foreach (var item in recipes)
+            {
+                imagePaths.Add((from Image in _context.Images where Image.RecipeId == item.Id && Image.Path != "" select Image.Path).First());
+            }
             var viewModel = new GetRecipesByTypeViewModel
             {
-                Recipes = recipes
+                Recipes = recipes,
+                ImagesPaths=imagePaths
             };
             return View(viewModel);
         }
@@ -279,36 +280,43 @@ namespace CookBook.Controllers
             return PartialView("_RecipeTypesPartial", model);
         }
 
-
         //akcija za brisanje recepta iz baze koja se poziva klikom na dugme u Profile View-u 
-        //[ValidateAntiForgeryToken]
+       
+        [Authorize]
         public ActionResult Delete(int id)
         {
-            var recipe = _context.Recipes.SingleOrDefault(r => r.Id == id);
-
-           
-            if(recipe == null)
+            var recipe = _context.Recipes.Include(r=> r.User).SingleOrDefault(r => r.Id == id);
+            if (recipe == null)
             {
                 HttpNotFound();
             }
-            _context.Recipes.Remove(recipe);
-            _context.SaveChanges();
 
-            //brisanje slika iz baze podataka
-            var images = (from Image in _context.Images
-                          where Image.RecipeId == id
-                          select Image).ToList();
-
-            foreach (var item in images)
+            if (User.Identity.GetUserId() == recipe.User.Id || User.IsInRole("Admin"))
             {
-                _context.Images.Remove(item);
+                _context.Recipes.Remove(recipe);
                 _context.SaveChanges();
-            }
 
-            //brisanje slika iz file system-a
-            string mappedPath = Server.MapPath(@"~/Images/" + id);
-            Directory.Delete(mappedPath, true);
-            return Json(new { result = "Redirect", url = Url.Action("Index", "Recipes") }, JsonRequestBehavior.AllowGet);
+                //brisanje slika iz baze podataka
+                var images = (from Image in _context.Images
+                              where Image.RecipeId == id
+                              select Image).ToList();
+
+                foreach (var item in images)
+                {
+                    _context.Images.Remove(item);
+                    _context.SaveChanges();
+                }
+
+                //brisanje slika iz file system-a
+                string mappedPath = Server.MapPath(@"~/Images/" + id);
+                Directory.Delete(mappedPath, true);
+                return Json(new { result = "Redirect", url = Url.Action("Index", "Recipes") }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Content("Nedozvoljen pristup!");
+            }
+           
         }
     }
 }

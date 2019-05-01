@@ -11,7 +11,7 @@
 
         <div class="container bg-white pt-5 pb-5 shadow-lg">
             <div class="row pt-2 justify-content-center">
-                <div class="col-md-8 col-sm-6 col-10 col-lg-9  pt-2 bg-info  rounded pozadina">
+                <div class="col-md-8 col-sm-6 col-10 col-lg-10  pt-2 bg-info  rounded pozadina">
                     <div class="h4 text-center bg-secondary text-light jumbotron rounded shadow-lg ">
                         Novi recept
                     </div>
@@ -33,7 +33,7 @@
             <div class="row justify-content-center pt-2 pb-2 ">
 
 
-                <div class="col-4 bg-info pozadina pb-2 pt-5 rounded">
+                <div class="col-5 bg-info pozadina pb-2 pt-5 rounded">
                     @Html.Label("Količina", new { @class = "h4 text-light " })
                     @Html.TextBox("Kolicina", null, new { @class = "form-control", @id = "Kolicina" })
                     <p id="addIngredients" style="display:none" class="text-light">Molimo Vas da u levo polje unesete količinu a u desno polje sastojak.</p>
@@ -49,14 +49,14 @@
 
             </div>
             <div class="row justify-content-center pt-2 pb-2 ">
-                <div class="col-9 bg-info pozadina pb-2 pt-5 rounded">
+                <div class="col-10 bg-info pozadina pb-2 pt-5 rounded">
                     <ul class="list-group list-group-flush" id="IngredientList"></ul>
                 </div>
 
             </div>
 
             <div class="row justify-content-center pb-2">
-                <div class="col-9 bg-info pozadina pb-2 pt-2 rounded shadow-lg">
+                <div class="col-10 bg-info pozadina pb-2 pt-2 rounded shadow-lg">
                     <div class="form-group shadow-lg ">
                         @Html.Label("Postupak", new { @class = "h4 text-light " })
                         @Html.TextAreaFor(m => m.Recipe.Procedure, new { @class = "form-control z-depth-1", @rows = "10", @placeholder = "Upišite postupak ovde..." })
@@ -65,7 +65,7 @@
                 </div>
             </div>
             <div class="row justify-content-center">
-                <div class="col-9">
+                <div class="col-10">
                     <span class="octicon octicon-alert"></span>
                     <div>Molimo vas da popunite sva polja. Morate dodati barem jednu sliku.</div>
                     <div>Možete maksimalno dodati 5 slika!</div>
@@ -74,13 +74,13 @@
             </div>
 
             <div class="row justify-content-center pb-2">
-                <div id="Images" class="col-9 bg-info pozadina pb-5 pt-5 rounded" style="overflow-y: scroll; height: 400px;">
+                <div id="Images" class="col-10 bg-info pozadina pb-5 pt-5 rounded" style="overflow-y: scroll; height: 400px;">
                     @for (int i = 0; i < 5; i++)
                     {
                         <div>
                             <input type="file" id="ImageFiles_@i" name="ImageFiles[@i]" style="display:none;" />
                             <input type="button" class="btn btn Mydefault btn-block  pt-3" value="Dodaj sliku..." onclick="document.getElementById('ImageFiles_@i').click();" />
-                            <img id="Image_@i" class="img-responsive rounded" src="@((Model.ImagesPaths != null && Model.ImagesPaths[i] != "") ? Url.Content(Model.ImagesPaths[i]) : "")" style="display:none;" />
+                            <img id="Image_@i" class="img-responsive rounded" src="@((Model.ImagesPaths != null && Model.ImagesPaths[i] != "") ? Url.Content(Model.ImagesPaths[i]) : "")" style="width:600px; height:400px; display:none;" />
                             <input type="button" class="btn btn-secondary btn-sm" id="RemoveImage" button_index="@i" value="x" style="display:none;" />
                             @Html.Hidden("ImagesChanged[" + i + "]", "false", null)
                             @Html.Hidden("ImagesRemoved[" + i + "]", "false", null)
@@ -94,7 +94,7 @@
             @Html.AntiForgeryToken()
 
             <div class="row justify-content-center pb-2 pt-3">
-                <div class="col-9">
+                <div class="col-10">
                     <button type="submit" class="Mybutton  btn-block">Dodaj recept</button>
                 </div>
             </div>
@@ -143,7 +143,6 @@
         // Brisanje sastojka iz liste na klik dugmeta removeIngredient
         $(document).on("click", "#removeIngredient", function () {
             $(this).closest('li').remove();
-
         });
     });
 
