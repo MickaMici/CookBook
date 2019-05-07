@@ -22,7 +22,6 @@ namespace CookBook.Controllers
         {
             _context = new ApplicationDbContext();
             this.UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(this._context));
-
         }
         protected override void Dispose(bool disposing)
         {
@@ -61,7 +60,6 @@ namespace CookBook.Controllers
         {
                       
             var recipeTypes = _context.RecipeTypes.ToList();
-
             var viewModel = new RecipesViewModel
             {
                 Recipe = _context.Recipes.Include(r => r.RecipeType).Include(r=>r.User).SingleOrDefault(r => r.Id == id),

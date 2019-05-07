@@ -78,8 +78,7 @@
                         <div style="cursor:pointer">
                             <img src="@Url.Content(item)" onclick="myFunction(this); " class="Mythumbnail img-fluid" data-toggle="tooltip" data-placement="top" title="Kliknite na sliku za veci prikaz" />
                         </div>
-                    </div>
-                    
+                    </div>                   
                 }
             }
         </div>
@@ -100,6 +99,10 @@
         }
 
         $(document).ready(function () {
+
+            //prikaz prve slike po ucitavanju stranice
+            myFunction($(".Mythumbnail")[0]);
+           
             $(".js-delete").on("click", function () {
                 var button = $(this);
                 bootbox.confirm("Da li ste sigurni da želite da izbrišete ovaj recept?", function (result) {

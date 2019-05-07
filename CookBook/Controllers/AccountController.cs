@@ -114,7 +114,7 @@ namespace CookBook.Controllers
                            where Recipe.User.Id == user.Id
                            select Recipe).ToList();
 
-            //pravim novu listu u koju za svaki item u listi recepata dodajem prvu sliku iz Image tabele koja odgovara id-u konkretnog recepta
+            //pravi se nova lista u koju za svaki item u listi recepata se dodaje prva slika iz Image tabele koja odgovara id-u konkretnog recepta
             List<string> imagePaths = new List<string>();
             foreach (var item in recipes)
             {

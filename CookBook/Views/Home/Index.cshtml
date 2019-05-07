@@ -17,25 +17,25 @@
             <div class="col-3">
                 <blockquote class="blockquote text-center ">
                     <p class="mb-0">Brige se lakše ispiraju supom.</p>
-                    <footer class="blockquote-footer"> <cite title="Source Title">Jevrejska izreka</cite></footer>
+                    <footer class="blockquote-footer"> <cite>Jevrejska izreka</cite></footer>
                 </blockquote>
             </div>
             <div class="col-3">
                 <blockquote class="blockquote text-center ">
                     <p class="mb-0">Neka vaša hrana bude lek, a vaš lek vaša hrana.</p>
-                    <footer class="blockquote-footer"> <cite title="Source Title">Hipokrat</cite></footer>
+                    <footer class="blockquote-footer"> <cite>Hipokrat</cite></footer>
                 </blockquote>
             </div>
             <div class="col-3">
                 <blockquote class="blockquote text-center ">
                     <p class="mb-0">Glad je najbolji kuvar.</p>
-                    <footer class="blockquote-footer"> <cite title="Source Title">Ksenofont</cite></footer>
+                    <footer class="blockquote-footer"> <cite>Ksenofont</cite></footer>
                 </blockquote>
             </div>
             <div class="col-3">
                 <blockquote class="blockquote text-center ">
                     <p class="mb-0">Novo britansko istraživanje pokazalo je kako 9 od 10 ispitanika voli čokoladu. Deseti laže.</p>
-                    <footer class="blockquote-footer"><cite title="Source Title">Robert Paul</cite></footer>
+                    <footer class="blockquote-footer"><cite>Robert Paul</cite></footer>
                 </blockquote>
             </div>
         </div>
@@ -43,25 +43,25 @@
             <div class="col-3">
                 <blockquote class="blockquote text-center ">
                     <p class="mb-0">Sve je dobro ukoliko je napravljeno od čokolade.</p>
-                    <footer class="blockquote-footer"> <cite title="Source Title">Jo Brand</cite></footer>
+                    <footer class="blockquote-footer"> <cite>Jo Brand</cite></footer>
                 </blockquote>
             </div>
             <div class="col-3">
                 <blockquote class="blockquote text-center ">
                     <p class="mb-0">Ne postoji iskrenija ljubav od ljubavi prema hrani.</p>
-                    <footer class="blockquote-footer"> <cite title="Source Title">George Bernard Shaw</cite></footer>
+                    <footer class="blockquote-footer"> <cite>George Bernard Shaw</cite></footer>
                 </blockquote>
             </div>
             <div class="col-3">
                 <blockquote class="blockquote text-center ">
                     <p class="mb-0">Sve dok imaš hranu u svojim ustima rešio si sva trenutna pitanja.</p>
-                    <footer class="blockquote-footer"> <cite title="Source Title">Franz Kafka</cite></footer>
+                    <footer class="blockquote-footer"> <cite>Franz Kafka</cite></footer>
                 </blockquote>
             </div>
             <div class="col-3">
                 <blockquote class="blockquote text-center ">
                     <p class="mb-0">Život bez ijedne gozbe dug je put na kome nema krčme.</p>
-                    <footer class="blockquote-footer"> <cite title="Source Title">Demokrit</cite></footer>
+                    <footer class="blockquote-footer"> <cite>Demokrit</cite></footer>
                 </blockquote>
             </div>
 
@@ -74,7 +74,7 @@
             <button id="GetInfo"><span class="octicon octicon-unverified"></span></button><br />
 
             <div id="info" style="display:none; width:100%; height:70px;">
-                <mark>Ukoliko želite da dodate novi recept morate se registrovati. </mark>
+                <mark>Ukoliko želite da dodate novi recept morate se registrovati.</mark>
             </div>
         </div>
     </div>
@@ -122,7 +122,7 @@
 
         $(document).ready(function () {
             $("#GetInfo").click(function () {
-                if ($("#info").attr("style").indexOf("display:none;") >-1 ) {
+                if ($("#info").is(":hidden")) {
                     $("#info").show();
                 }
                 else {

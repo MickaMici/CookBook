@@ -28,7 +28,9 @@
                         <div class="col-10 col-xs-3">
                             @Html.ActionLink(item.Name, "Details", "Recipes", routeValues: new { @id = item.Id }, htmlAttributes: new { @style = "font-size:30px" })
 
-                            <img class="rounded shadow-lg " src="@Url.Content(Model.ImagesPaths[Model.Recipes.IndexOf(item)])" style="width:100%; height:500px" />
+                            <a href="@Url.Action("Details","Recipes", routeValues: new {@id = item.Id })">
+                                <img class="rounded shadow-lg " src="@Url.Content(Model.ImagesPaths[Model.Recipes.IndexOf(item)])" style="width:100%; height:500px" />
+                                </a>
                         </div>
                     </td>                 
                 </tr>
